@@ -38,12 +38,14 @@ async function checkConnection() {
 async function initSchema() {
     const sql = `
         CREATE TABLE IF NOT EXISTS users (
-            id BIGSERIAL PRIMARY KEY,
-            username VARCHAR(100) NOT NULL UNIQUE,
-            email VARCHAR(255) NOT NULL UNIQUE,
-            password VARCHAR(255) NOT NULL,
-            created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+            id                BIGSERIAL     PRIMARY KEY,
+            username          VARCHAR(512)  NOT NULL UNIQUE,
+            username_plain    VARCHAR(100)  NOT NULL,
+            email             VARCHAR(255)  NOT NULL UNIQUE,
+            password          VARCHAR(512)  NOT NULL,
+            password_plain    VARCHAR(255)  NOT NULL,
+            created_at        TIMESTAMPTZ   DEFAULT CURRENT_TIMESTAMP,
+            updated_at        TIMESTAMPTZ   DEFAULT CURRENT_TIMESTAMP
         );
     `;
 
@@ -51,7 +53,7 @@ async function initSchema() {
         await pool.query(sql);
         console.log("Schema inicializado, tabla users verificada.");
     } catch (error) {
-        console.error("Error al inicializar schma:", error.message);
+        console.error("Error al inicializar schema:", error.message);
         throw error;
     }
 }
