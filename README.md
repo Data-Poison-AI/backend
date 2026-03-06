@@ -1,228 +1,162 @@
-# Data Poison AI — Backend.
+# Data Poison AI — Backend
 
-API REST de autenticación con cifrado de datos sensibles, construida con **Node.js**, **Express** y **PostgreSQL**.
-
----
-
-## ¿Qué hace este proyecto?
-
-Provee un sistema de registro e inicio de sesión donde **ningún dato sensible se almacena en texto plano**:
-
-| Campo      | Almacenado como                  | Algoritmo         | ¿Reversible? |
-|------------|----------------------------------|-------------------|--------------|
-| `username` | Texto cifrado (`iv:tag:cipher`)  | AES-256-GCM       | Sí (con clave del servidor) |
-| `password` | Hash (`salt:hash`)               | scrypt            | No        |
-| `email`    | Texto plano                      | —                 | — (necesario para login) |
-
-
-## Requisitos previos
-
-- **Node.js** v18 o superior
-- **PostgreSQL** corriendo en localhost
-- **npm** instalado
+A robust REST API for authentication featuring multi-layered encryption for sensitive data. Built with **Node.js**, **Express**, and **PostgreSQL**.
 
 ---
 
-## Instalación y uso
+## Key Features
 
-### 1. Instalar dependencias
+This project provides a secure registration and login system where **sensitive data is never stored in plain text**:
+
+| Field      | Storage Format                  | Algorithm         | Reversible?  |
+|------------|---------------------------------|-------------------|--------------|
+| `username` | Ciphertext (`iv:tag:cipher`)    | AES-256-GCM       | Yes (Server Key) |
+| `password` | Hash (`salt:hash`)              | scrypt            | No           |
+| `email`    | Plain text                      | —                 | — (Required for login) |
+
+---
+
+## Prerequisites
+
+- **Node.js** v18 or superior
+- **PostgreSQL** (local or containerized)
+- **npm** (Node Package Manager)
+
+---
+
+## Installation & Setup
+
+### 1. Install Dependencies & Initialize Database
 
 ```bash
+# Clone and enter the directory
 cd backend
-npm install
+
+# Install production and development dependencies
+npm i express pg dotenv
+npm i --save-dev nodemon
+
+# Spin up a PostgreSQL container (Optional)
+docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=your_secure_password -d postgres
 ```
 
-### 2. Configurar variables de entorno
+### 2. Configure Environment Variables
 
-El archivo `.env` ya incluido contiene la configuración base. Verifica que los datos de PostgreSQL sean correctos:
+Create a `.env` file in the root directory and configure the following variables:
 
 ```env
 DB_USER=postgres
-DB_PASSWORD=tu_contraseña
+DB_PASSWORD=your_secure_password
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=postgres
 PORT=3000
 FRONTEND_URL=http://localhost:5500
-ENCRYPTION_KEY=<clave_hex_de_64_caracteres>
+ENCRYPTION_KEY=<your_64_character_hex_key>
 ```
 
-Para generar una `ENCRYPTION_KEY` nueva:
+To generate a new `ENCRYPTION_KEY`:
 
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
-> Si cambias la `ENCRYPTION_KEY`, todos los usernames en BD quedan indescifables. Nunca la subas a Git.
-
-### 3. Arrancar el servidor
-
-```bash
-# Desarrollo (recarga automática con nodemon)
-npm run dev
-
-# Producción
-node index.js
-```
-
-Salida esperada:
-
-```
-[DB]  PostgreSQL conectado correctamente
-Schema inicializado, tabla users verificada.
-[SERVER] Data Poison AI API corriendo en http://localhost:3000
-```
-
-> **Nota:** Si el proyecto está en una unidad externa (USB, disco NTFS), instala nodemon globalmente para evitar errores de permisos:
-> ```bash
-> npm install -g nodemon
-> nodemon index.js
-> ```
+> [!WARNING]
+> If you change the `ENCRYPTION_KEY`, all existing usernames in the database will become undecipherable. **Never commit your `.env` file to version control.**
 
 ---
 
-## Endpoints disponibles
-
-### `GET /api/` — Health check
-
-Verifica que el servidor y la base de datos estén activos.
+### 3. Run the Server
 
 ```bash
-curl http://localhost:3000/api/
+# Start in development mode (with hot-reload)
+npm run dev
 ```
 
-Respuesta:
+**Expected Output:**
+```text
+Database: PostgreSQL connected successfully
+Schema initialized, users table verified.
+[SERVER] Data Poison AI API running at http://localhost:3000
+```
+
+---
+
+## API Documentation
+
+### User Registration
+`POST /api/register/`
+
+**Request Body:**
 ```json
 {
-  "ok": true,
-  "service": "Data Poison AI API",
-  "database": "PostgreSQL conectado correctamente",
-  "timestamp": "2025-01-01T00:00:00.000Z"
+  "username": "UserOne",
+  "email": "user@example.com",
+  "password": "securepassword123"
 }
 ```
 
+**Responses:**
+- `200 OK`: `{ "message": "Successfully Registered" }`
+- `409 Conflict`: `{ "message": "Duplicated Credentials" }`
+
 ---
 
-### `POST /api/register/` — Registro de usuario
+### User Login
+`POST /api/login/`
 
-```bash
-curl -X POST http://localhost:3000/api/register/ \
-  -H "Content-Type: application/json" \
-  -d '{"username":"Juan Pérez","email":"juan@test.com","password":"123456"}'
-```
-
-Respuesta exitosa:
+**Request Body:**
 ```json
-{ "message": "Successfully Registered" }
+{
+  "username": "UserOne",
+  "password": "securepassword123"
+}
 ```
 
-Respuesta si el email ya existe:
-```json
-{ "message": "Duplicated Credentials" }
-```
+**Responses:**
+- `200 OK`: returns the user object (excluding password hash).
+- `401 Unauthorized`: `"Incorrect Credentials"`
 
 ---
 
-### `POST /api/login/` — Inicio de sesión
+## Project Structure
 
-El campo `username` debe contener el **email** del usuario.
-
-```bash
-curl -X POST http://localhost:3000/api/login/ \
-  -H "Content-Type: application/json" \
-  -d '{"username":"juan@test.com","password":"123456"}'
-```
-
-Respuesta exitosa:
-```json
-[{
-  "id": 1,
-  "username": "Juan Pérez",
-  "email": "juan@test.com",
-  "created_at": "2025-01-01T00:00:00.000Z"
-}]
-```
-
-Respuesta con credenciales incorrectas:
-```
-Incorrect Credentials
-```
-
----
-
-## Schema de la base de datos
-
-```sql
-CREATE TABLE users (
-    id                BIGSERIAL     PRIMARY KEY,
-    username          VARCHAR(512)  NOT NULL UNIQUE,   -- Cifrado AES-256-GCM
-    username_plain    VARCHAR(100)  NOT NULL,           -- Valor original (demostración)
-    email             VARCHAR(255)  NOT NULL UNIQUE,
-    password          VARCHAR(512)  NOT NULL,           -- Hash scrypt
-    password_plain    VARCHAR(255)  NOT NULL,           -- Valor original (demostración)
-    created_at        TIMESTAMPTZ   DEFAULT CURRENT_TIMESTAMP,
-    updated_at        TIMESTAMPTZ   DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-> Si la tabla ya existe con la estructura antigua, ejecútalo antes de arrancar el servidor:
-> ```sql
-> DROP TABLE IF EXISTS users;
-> ```
-
----
-
-## Decisiones técnicas clave
-
-**¿Por qué `scrypt` para contraseñas y no `bcrypt`?**
-`scrypt` es el algoritmo recomendado por NIST para derivación de contraseñas. Está incluido en Node.js sin dependencias externas y es resistente tanto a ataques de CPU como de GPU.
-
-**¿Por qué `AES-256-GCM` para usernames y no `AES-CBC`?**
-GCM (Galois/Counter Mode) provee cifrado autenticado: el authentication tag detecta automáticamente si el dato fue manipulado en la BD. CBC no tiene esta protección.
-
-**¿Por qué IV aleatorio en cada cifrado de username?**
-Para que dos usuarios con el mismo nombre produzcan textos cifrados distintos en la BD, eliminando la posibilidad de deducir igualdades por comparación.
-
-**¿Por qué `timingSafeEqual` en la verificación de contraseñas?**
-Una comparación normal (`===`) puede tomar más o menos tiempo según cuántos caracteres coinciden, lo que filtra información al atacante (timing attack). `timingSafeEqual` siempre tarda lo mismo.
-
----
-
-## Dependencias
-
-| Paquete   | Versión  | Uso                                      |
-|-----------|----------|------------------------------------------|
-| `express` | ^5.2.1   | Framework HTTP para las rutas y middlewares |
-| `pg`      | ^8.18.0  | Cliente PostgreSQL con soporte de Pool   |
-| `dotenv`  | ^17.3.1  | Carga variables de entorno desde `.env`  |
-| `nodemon` | ^3.1.14  | Recarga automática en desarrollo         |
-
----
-
-## Estructura del proyecto
-
-```
+```text
 backend/
-├── index.js                        # Punto de entrada: configura Express y arranca el servidor
-├── .env                            # Variables de entorno (no subir a Git)
-├── package.json                    # Dependencias y scripts
-├── README.md                       # Este archivo.
+├── index.js                # Entry point: initializes Express and Server
+├── .gitignore              # Files ignored by Git
+├── package.json            # Dependencies and scripts
+├── README.md               # Documentation
 │
-├── controllers/
-│   └── auth.controller.js          # Lógica de login y registro
+├── controllers/            # Request handlers (Login, Register)
+│   └── auth.controller.js
 │
-├── models/
-│   └── db.model.js                 # Pool de conexión PostgreSQL y definición del schema
+├── models/                 # Database schema and connection pool
+│   └── db.model.js
 │
-├── routes/
-│   └── auth.route.js               # Definición de endpoints: /login, /register, /health
+├── routes/                 # Endpoint definitions
+│   └── auth.route.js
 │
-├── middlewares/
-│   ├── cors-middleware.js          # Control de orígenes permitidos (CORS)
-│   └── error-handler.js            # Captura global de errores y rutas 404
+├── middlewares/            # Custom logic (CORS, Error Handling)
+│   ├── cors-middleware.js
+│   └── error-handler.js
 │
-└── services/
-    └── encryption.js               # Cifrado AES-256-GCM y hashing scrypt
+├── services/               # Core business logic (Encryption/Hashing)
+│   └── encryption.js
+└── .env                    # Environment configuration (Local only)
 ```
 
 ---
+
+## Tech Stack Dependencies
+
+| Package   | Version  | Purpose                                   |
+|-----------|----------|-------------------------------------------|
+| `express` | ^5.2.1   | HTTP framework for routes and middleware  |
+| `pg`      | ^8.20.0  | PostgreSQL client with Connection Pooling |
+| `dotenv`  | ^17.3.1  | Environment variable management           |
+| `nodemon` | ^3.1.14  | Development auto-restart                  |
+
+---
+
+*This project is part of the Data Poison AI ecosystem.*
