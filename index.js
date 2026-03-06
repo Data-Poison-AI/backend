@@ -1,7 +1,8 @@
 require("dotenv").config();
 
 const express = require("express");
-const router = require("./routes/auth.route.js");
+const routerAuth = require("./routes/auth.route.js");
+const routerUploads = require("./routes/uploads.route.js");
 const corsMiddleware = require("./middlewares/cors-middleware.js");
 const { initSchema, checkConnection } = require("./models/db.model.js");
 const { errorHandler, notFound } = require("./middlewares/error-handler.js");
@@ -12,7 +13,8 @@ const PORT = process.env.PORT || 3000;
 app.use(corsMiddleware);
 app.use(express.json());
 
-app.use("/api", router);
+app.use("/api/auth", routerAuth);
+app.use("/api/uploads", routerUploads);
 
 app.use(notFound);
 app.use(errorHandler);

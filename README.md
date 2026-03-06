@@ -33,7 +33,7 @@ This project provides a secure registration and login system where **sensitive d
 cd backend
 
 # Install production and development dependencies
-npm i express pg dotenv
+npm i express pg dotenv multer adm-zip
 npm i --save-dev nodemon
 
 # Spin up a PostgreSQL container (Optional)
