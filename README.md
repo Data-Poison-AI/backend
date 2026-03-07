@@ -14,6 +14,11 @@ This project provides a secure registration and login system where **sensitive d
 | `password` | Hash (`salt:hash`)              | scrypt            | No           |
 | `email`    | Plain text                      | —                 | — (Required for login) |
 
+### 📂 File Processing
+- **Multipart Upload**: Support for ZIP file uploads using `multer`.
+- **Automated Processing**: Extracting ZIP files and re-packaging contents securely.
+- **Isolated Storage**: `uploads/` and `unzip/` directories are isolated and excluded from version control.
+
 ---
 
 ## Prerequisites
@@ -33,7 +38,7 @@ This project provides a secure registration and login system where **sensitive d
 cd backend
 
 # Install production and development dependencies
-npm i express pg dotenv
+npm i express pg dotenv multer adm-zip
 npm i --save-dev nodemon
 
 # Spin up a PostgreSQL container (Optional)
@@ -119,6 +124,26 @@ Schema initialized, users table verified.
 
 ---
 
+### File Upload & ZIP Processing
+`POST /api/uploads/`
+
+**Request Type:** `multipart/form-data`
+
+**Form Field:**
+- `file`: The ZIP file to be uploaded.
+
+**Functionality:**
+1. Receives the ZIP file.
+2. Extracts contents to a temporary `unzip/` directory.
+3. Re-zips the processed files to `uploads/upload.zip`.
+
+**Responses:**
+- `200 OK`: `{ "message": "File uploaded successfully" }`
+- `400 Bad Request`: `{ "message": "No file uploaded. Please ensure the field name is 'file'." }`
+- `500 Internal Server Error`: `{ "message": "error_message" }`
+
+---
+
 ## Project Structure
 
 ```text
@@ -128,21 +153,27 @@ backend/
 ├── package.json            # Dependencies and scripts
 ├── README.md               # Documentation
 │
-├── controllers/            # Request handlers (Login, Register)
-│   └── auth.controller.js
+├── controllers/            # Request handlers (Login, Register, Uploads)
+│   ├── auth.controller.js
+│   └── uploads.controller.js
 │
 ├── models/                 # Database schema and connection pool
 │   └── db.model.js
 │
 ├── routes/                 # Endpoint definitions
-│   └── auth.route.js
+│   ├── auth.route.js
+│   └── uploads.route.js
 │
 ├── middlewares/            # Custom logic (CORS, Error Handling)
 │   ├── cors-middleware.js
 │   └── error-handler.js
 │
-├── services/               # Core business logic (Encryption/Hashing)
-│   └── encryption.js
+├── services/               # Core business logic
+│   ├── encryption.service.js
+│   └── zip.service.js
+│
+├── uploads/                # Directory for processed ZIP files (Git-ignored)
+├── unzip/                  # Temporary extraction directory (Git-ignored)
 └── .env                    # Environment configuration (Local only)
 ```
 
@@ -155,6 +186,8 @@ backend/
 | `express` | ^5.2.1   | HTTP framework for routes and middleware  |
 | `pg`      | ^8.20.0  | PostgreSQL client with Connection Pooling |
 | `dotenv`  | ^17.3.1  | Environment variable management           |
+| `multer`  | ^2.1.1   | Handling multipart/form-data for uploads  |
+| `adm-zip` | ^0.5.16  | ZIP compression and extraction utilities  |
 | `nodemon` | ^3.1.14  | Development auto-restart                  |
 
 ---
