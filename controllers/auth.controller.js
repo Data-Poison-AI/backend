@@ -1,5 +1,5 @@
 const db = require("../models/db.model.js");
-const enc = require("../services/encryption.js");
+const enc = require("../services/encryption.service.js");
 
 /**
  * Handle user login.
