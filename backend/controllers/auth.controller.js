@@ -4,25 +4,22 @@ const enc = require("../services/encryption.service.js");
 /**
  * Handle user login.
  */
-const logIn = (req, res) => {
+const logIn = async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
 
-        db.pool.query(
-            `SELECT username, password, email FROM users`,
-            async (err, respond) => {
-                if (err) {
-                    return res.status(500).send({ message: err.message });
-                }
-                const users = respond.rows;
-                const user = users.find(u => u.username === username);
-                if (!user || !(await enc.verifyPassword(password, user.password))) {
-                    return res.status(401).send("Incorrect Credentials");
-                }
-                delete user.password;
-                res.status(200).send(user);
-            }
+        const result = await db.pool.query(
+            `SELECT * FROM users WHERE email = $1`,
+            [email]
         );
+
+        const user = result.rows[0];
+
+        if (!user || !(await enc.verifyPassword(password, user.password))) {
+            return res.status(401).send({ message: "Credenciales incorrectas" });
+        }
+        delete user.password;
+        res.status(200).send(user);
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
@@ -46,12 +43,12 @@ const register = async (req, res) => {
 
         const hashedPassword = await enc.hashPassword(password);
 
-        await db.pool.query(
-            `INSERT INTO users (username, email, password) VALUES ($1, $2, $3)`,
+        const result = await db.pool.query(
+            `INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id, username, email`,
             [username, email, hashedPassword]
         );
 
-        res.status(200).send({ message: "Successfully Registered" });
+        res.status(200).send({ message: "¡Cuenta creada con éxito!", user: result.rows[0] });
     } catch (error) {
         res.status(500).send({ message: error.message });
     }
