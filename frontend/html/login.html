@@ -1,50 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DataPoison Autenticación</title>
+    <title>PoisonAI Autenticación</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
-<script>
+    <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        darkbg:      '#08050f',
+                        darkbg: '#08050f',
                         brandpurple: '#b066ff',
-                        brandgreen:  '#00e676',
+                        brandgreen: '#00e676',
                     }
                 }
             }
         }
-</script>
+    </script>
 
 </head>
 
-    
+
 
 <body class="bg-darkbg min-h-screen flex flex-col">
 
 
-<!-- navbar -->
+    <!-- navbar -->
 
-<nav class="nav-glass sticky top-0 z-[100] transition-all flex intems-center justify-center ">
+    <nav class="nav-glass sticky top-0 z-[100] transition-all flex intems-center justify-center ">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2 group cursor-pointer">
+            <a href="index.html" class="flex items-center gap-2 group cursor-pointer"
+                style="text-decoration:none; color:inherit;">
                 <div class="relative">
-                    <i class="fa-solid fa-shield-halved text-brandgreen text-2xl group-hover:rotate-[360deg] transition-transform duration-700"></i>
+                    <i
+                        class="fa-solid fa-shield-halved text-brandgreen text-2xl group-hover:rotate-[360deg] transition-transform duration-700"></i>
                     <div class="absolute inset-0 bg-brandgreen/40 blur-md"></div>
                 </div>
-                <span class="text-xl font-bold tracking-tighter uppercase">Poison<span class="text-brandgreen">IA</span></span>
-            </div>
+                <span class="text-xl font-bold tracking-tighter uppercase">Poison<span
+                        class="text-brandgreen">AI</span></span>
+            </a>
             <div class="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-widest">
-                <a href="intex.html" class="text-brandpurple">Inicio</a>
+                <a href="index.html" class="text-gray-400 hover:text-white transition">Inicio</a>
                 <a href="docs.html" class="text-gray-400 hover:text-white transition">Documentación</a>
-                <!-- <a href="scanner.html" class="text-gray-400 hover:text-white transition">IA Scanner</a> -->
                 <a href="#" class="text-gray-400 hover:text-white transition">Contacto</a>
-                <a href="login.html" class="bg-gradient-to-r from-brandpurple to-brandgreen text-white px-6 py-2 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:scale-105 transition">Iniciar Sesión</a>
+                <a href="login.html"
+                    class="bg-gradient-to-r from-brandpurple to-brandgreen text-white px-6 py-2 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:scale-105 transition">Iniciar
+                    Sesión</a>
             </div>
         </div>
     </nav>
@@ -54,116 +59,118 @@
 
 
 
-<main class="flex-grow flex items-center justify-center p-6">
+    <main class="flex-grow flex items-center justify-center p-6">
 
-    <!-- LOGIN -->
-    <div id="login-container" class=" w-full max-w-md border border-white rounded-2xl p-9 text-center  ">
-        <div class="flex flex-col items-center mb-9">
-            <div class="flex items-center gap-2 mb-9">
-                <i class="fa-solid fa-shield-halved text-2xl" style="color: var(--purple);"></i>
-                <span class="text-xl font-bold text-white" style="letter-spacing: 0.03em;">
-                    Poison<span style="color: var(--green);">IA</span>
-                </span>
+        <!-- LOGIN -->
+        <div id="login-container" class=" w-full max-w-md border border-white rounded-2xl p-9 text-center  ">
+            <div class="flex flex-col items-center mb-9">
+                <a href="index.html" class="flex items-center gap-2 mb-9" style="text-decoration:none; color:inherit;">
+                    <i class="fa-solid fa-shield-halved text-2xl" style="color: var(--purple);"></i>
+                    <span class="text-xl font-bold text-white" style="letter-spacing: 0.03em;">
+                        POISON<span style="color: var(--green);">AI</span>
+                    </span>
+                </a>
+                <h2 class="text-white text-lg font-semibold mt-4">Iniciar Sesión</h2>
+                <div class="title-line"></div>
             </div>
-            <h2 class="text-white text-lg font-semibold mt-4">Iniciar Sesión</h2>
-            <div class="title-line"></div>
+
+            <form id="login-form" class="space-y-4">
+                <div class="relative input-group">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <i class="fa-regular fa-envelope text-sm"></i>
+                    </span>
+                    <input type="email" id="login-email" placeholder="Email" required class="input-field">
+                </div>
+
+                <div class="relative input-group">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <i class="fa-solid fa-lock text-sm"></i>
+                    </span>
+                    <input type="password" id="login-password" placeholder="Contraseña" required class="input-field"
+                        style="padding-right: 2.5rem;">
+                    <button type="button" onclick="togglePassword('login-password', this)"
+                        class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 hover:text-white transition">
+                        <i class="fa-regular fa-eye text-sm"></i>
+                    </button>
+                </div>
+
+                <button type="submit" class="btn-primary">Iniciar Sesión</button>
+            </form>
+
+            <!-- redireccionar al register -->
+
+            <p class="text-gray-500 text-sm mt-8">
+                ¿No tienes cuenta?
+                <a href="#" onclick="toggleAuth()" class="auth-link">Regístrate</a>
+            </p>
         </div>
 
-        <form id="login-form" class="space-y-4">
-            <div class="relative input-group">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                    <i class="fa-regular fa-envelope text-sm"></i>
-                </span>
-                <input type="email" id="login-email" placeholder="Email" required class="input-field">
+
+
+
+
+
+        <!-- REGISTER -->
+        <div id="register-container" class="w-full max-w-md rounded-2xl p-10 border border-white text-center hidden">
+            <div class="flex flex-col items-center mb-6">
+                <a href="index.html" class="flex items-center gap-2 mb-2" style="text-decoration:none; color:inherit;">
+                    <i class="fa-solid fa-shield-halved text-2xl" style="color: var(--purple);"></i>
+                    <span class="text-xl font-bold text-white" style="letter-spacing: 0.03em;">
+                        POISON<span style="color: var(--green);">AI</span>
+                    </span>
+                </a>
+                <h2 class="text-white text-lg font-semibold mt-4">Crear Cuenta</h2>
+                <div class="title-line"></div>
             </div>
 
-            <div class="relative input-group">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                    <i class="fa-solid fa-lock text-sm"></i>
-                </span>
-                <input type="password" id="login-password" placeholder="Contraseña" required
-                    class="input-field" style="padding-right: 2.5rem;">
-                <button type="button" onclick="togglePassword('login-password', this)"
-                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 hover:text-white transition">
-                    <i class="fa-regular fa-eye text-sm"></i>
-                </button>
-            </div>
+            <form id="register-form" class="space-y-4">
+                <div class="relative input-group">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <i class="fa-regular fa-user text-sm"></i>
+                    </span>
+                    <input type="text" id="reg-name" placeholder="Nombre completo" required class="input-field">
+                </div>
 
-            <button type="submit" class="btn-primary">Iniciar Sesión</button>
-        </form>
+                <div class="relative input-group">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <i class="fa-regular fa-envelope text-sm"></i>
+                    </span>
+                    <input type="email" id="reg-email" placeholder="Email" required class="input-field">
+                </div>
 
-        <!-- redireccionar al register -->
+                <div class="relative input-group">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <i class="fa-solid fa-lock text-sm"></i>
+                    </span>
+                    <input type="password" id="reg-password" placeholder="Contraseña" required class="input-field"
+                        style="padding-right: 2.5rem;">
+                    <button type="button" onclick="togglePassword('reg-password', this)"
+                        class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 hover:text-white transition">
+                        <i class="fa-regular fa-eye text-sm"></i>
+                    </button>
+                </div>
 
-        <p class="text-gray-500 text-sm mt-8">
-            ¿No tienes cuenta?
-            <a href="#" onclick="toggleAuth()" class="auth-link">Regístrate</a>
-        </p>
-    </div>
+                <div class="relative input-group">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <i class="fa-solid fa-lock text-sm"></i>
+                    </span>
+                    <input type="password" id="reg-confirm-password" placeholder="Confirmar contraseña" required
+                        class="input-field">
+                </div>
 
-    
+                <button type="submit" class="btn-primary">Registrarse</button>
+            </form>
 
-
-
-    
-    <!-- REGISTER -->
-    <div id="register-container" class="w-full max-w-md rounded-2xl p-10 border border-white text-center hidden">
-        <div class="flex flex-col items-center mb-6">
-            <div class="flex items-center gap-2 mb-2">
-                <i class="fa-solid fa-shield-halved text-2xl" style="color: var(--purple);"></i>
-                <span class="text-xl font-bold text-white" style="letter-spacing: 0.03em;">
-                    Data<span style="color: var(--green);">Poison</span>
-                </span>
-            </div>
-            <h2 class="text-white text-lg font-semibold mt-4">Crear Cuenta</h2>
-            <div class="title-line"></div>
+            <p class="text-gray-500 text-sm mt-8">
+                ¿Ya tienes cuenta?
+                <a href="#" onclick="toggleAuth()" class="auth-link">Inicia sesión</a>
+            </p>
         </div>
-
-        <form id="register-form" class="space-y-4">
-            <div class="relative input-group">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                    <i class="fa-regular fa-user text-sm"></i>
-                </span>
-                <input type="text" id="reg-name" placeholder="Nombre completo" required class="input-field">
-            </div>
-
-            <div class="relative input-group">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                    <i class="fa-regular fa-envelope text-sm"></i>
-                </span>
-                <input type="email" id="reg-email" placeholder="Email" required class="input-field">
-            </div>
-
-            <div class="relative input-group">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                    <i class="fa-solid fa-lock text-sm"></i>
-                </span>
-                <input type="password" id="reg-password" placeholder="Contraseña" required
-                    class="input-field" style="padding-right: 2.5rem;">
-                <button type="button" onclick="togglePassword('reg-password', this)"
-                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 hover:text-white transition">
-                    <i class="fa-regular fa-eye text-sm"></i>
-                </button>
-            </div>
-
-            <div class="relative input-group">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                    <i class="fa-solid fa-lock text-sm"></i>
-                </span>
-                <input type="password" id="reg-confirm-password" placeholder="Confirmar contraseña" required class="input-field">
-            </div>
-
-            <button type="submit" class="btn-primary">Registrarse</button>
-        </form>
-
-        <p class="text-gray-500 text-sm mt-8">
-            ¿Ya tienes cuenta?
-            <a href="#" onclick="toggleAuth()" class="auth-link">Inicia sesión</a>
-        </p>
-    </div>
 
     </main>
 
 
-<script src="../js/login.js"></script>
+    <script src="../js/login.js"></script>
 </body>
+
 </html>
