@@ -72,21 +72,42 @@
             }
         };
 
-        function processAnalysis(event) {
+        async function processAnalysis(event) {
             event.stopPropagation();
+
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Por favor selecciona un archivo.");
+                return;
+            }
+
             document.getElementById('file-info').classList.add('hidden');
             document.getElementById('scanning-loader').classList.remove('hidden');
 
-            setTimeout(() => {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                // Hacer el POST real al backend
+                const response = await fetch('http://localhost:3000/api/uploads', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || "Error en el análisis");
+                }
+
                 document.getElementById('scanning-loader').classList.add('hidden');
                 document.getElementById('drop-zone').classList.add('hidden');
                 document.getElementById('result-container').classList.remove('hidden');
                 
                 const tbody    = document.getElementById('history-table-body');
-                const fileName = document.getElementById('selected-filename').innerText;
                 const newRow   = `
                     <tr class="hover:bg-white/5 transition animate-pulse" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                        <td class="p-5 flex items-center gap-3"><i class="fa-solid fa-file text-gray-500"></i> <span class="mono-text">${fileName}</span></td>
+                        <td class="p-5 flex items-center gap-3"><i class="fa-solid fa-file text-gray-500"></i> <span class="mono-text">${file.name}</span></td>
                         <td class="p-5 text-gray-400">Justo ahora</td>
                         <td class="p-5"><span class="bg-white/10 px-3 py-1 rounded-full text-xs">Desconocido</span></td>
                         <td class="p-5 font-bold text-red-400">82%</td>
@@ -94,7 +115,13 @@
                     </tr>
                 `;
                 tbody.insertAdjacentHTML('afterbegin', newRow);
-            }, 3000);
+
+            } catch (error) {
+                console.error("Upload error:", error);
+                document.getElementById('scanning-loader').classList.add('hidden');
+                document.getElementById('file-info').classList.remove('hidden');
+                alert("Error contactando al servidor backend: " + error.message);
+            }
         }
 
         function resetScanner() {
@@ -105,5 +132,52 @@
         }
 
         window.onload = () => {
-            document.getElementById('user-display-name').innerText = "Analista Demo";
+            const userStr = localStorage.getItem('user');
+            if (!userStr) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const user = JSON.parse(userStr);
+                
+                // Actualizar Sidebar
+                document.getElementById('user-display-name').innerText = user.username || 'Usuario';
+                
+                // Actualizar Perfil
+                const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || 'U')}&background=00e676&color=07040f&bold=true&size=128`;
+                const avatarImg = document.getElementById('profile-avatar');
+                if (avatarImg) avatarImg.src = avatarUrl;
+                
+                const sidebarAvatarImg = document.querySelector('#sidebar img');
+                if (sidebarAvatarImg) sidebarAvatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || 'U')}&background=00e676&color=07040f&bold=true`;
+
+                const profileName = document.getElementById('profile-name');
+                if (profileName) profileName.innerText = user.username;
+
+                const profileEmail = document.getElementById('profile-email');
+                if (profileEmail) profileEmail.innerText = user.email;
+
+                const profileJoined = document.getElementById('profile-joined');
+                if (profileJoined) {
+                    if (user.created_at) {
+                        const date = new Date(user.created_at);
+                        profileJoined.innerText = date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+                    } else {
+                        profileJoined.innerText = 'Reciente';
+                    }
+                }
+            } catch(e) {
+                console.error("Error parsing user data");
+                window.location.href = 'login.html';
+            }
+
+            // Logout Listener
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('user');
+                    window.location.href = 'login.html';
+                });
+            }
         };
