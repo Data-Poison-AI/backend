@@ -121,25 +121,48 @@
                     body: formData
                 });
 
-                const data = await response.json();
-
                 if (!response.ok) {
-                    throw new Error(data.message || "Error en el análisis");
+                    let errorMessage = "Error en el análisis";
+                    try {
+                        const data = await response.json();
+                        if (data && data.message) errorMessage = data.message;
+                    } catch (e) {
+                        errorMessage = await response.text();
+                    }
+                    throw new Error(errorMessage);
                 }
+
+                // Obtener el archivo del backend
+                const blob = await response.blob();
+                const downloadUrl = window.URL.createObjectURL(blob);
 
                 document.getElementById('scanning-loader').classList.add('hidden');
                 document.getElementById('drop-zone').classList.add('hidden');
                 document.getElementById('result-container').classList.remove('hidden');
                 
+                // Mostrar y configurar el boton de descarga
+                const downloadBtn = document.getElementById('download-report-btn');
+                if (downloadBtn) {
+                    downloadBtn.classList.remove('hidden');
+                    downloadBtn.onclick = () => {
+                        const a = document.createElement('a');
+                        a.href = downloadUrl;
+                        a.download = `Reporte_${file.name}`;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    };
+                }
+
                 const tbody    = document.getElementById('history-table-body');
                 if (tbody) {
                     const newRow   = `
                         <tr class="hover:bg-white/5 transition animate-pulse" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                             <td class="p-5 flex items-center gap-3"><i class="fa-solid fa-file text-gray-500"></i> <span class="mono-text">${file.name}</span></td>
                             <td class="p-5 text-gray-400">Justo ahora</td>
-                            <td class="p-5"><span class="bg-white/10 px-3 py-1 rounded-full text-xs">Desconocido</span></td>
+                            <td class="p-5"><span class="bg-white/10 px-3 py-1 rounded-full text-xs">Exitoso</span></td>
                             <td class="p-5 font-bold text-red-400">82%</td>
-                            <td class="p-5"><span class="text-red-400 text-xs font-bold"><i class="fa-solid fa-ban"></i> Crítico</span></td>
+                            <td class="p-5"><span class="text-red-400 text-xs font-bold"><i class="fa-solid fa-ban"></i> Detectado</span></td>
                         </tr>
                     `;
                     tbody.insertAdjacentHTML('afterbegin', newRow);
@@ -157,6 +180,13 @@
             document.getElementById('result-container').classList.add('hidden');
             document.getElementById('drop-zone').classList.remove('hidden');
             document.getElementById('upload-prompt').classList.remove('hidden');
+            
+            const downloadBtn = document.getElementById('download-report-btn');
+            if (downloadBtn) {
+                downloadBtn.classList.add('hidden');
+                downloadBtn.onclick = null;
+            }
+
             fileInput.value = '';
         }
 
