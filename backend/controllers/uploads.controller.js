@@ -9,14 +9,30 @@ const uploadZip = async (req, res) => {
 
         await unzipFiles(req.file.path, './unzip/')
         await zipFiles('./unzip/', './upload.zip')
-        fs.rmSync('./uploads', { recursive: true, force: true })
-        fs.rmSync('./unzip', { recursive: true, force: true })
-        res.status(200).send({
-            message: "File uploaded successfully"
-        })
+        // Cleanup exactly what we extracted, but DON'T delete the main 'uploads' folder!
+        fs.rmSync(req.file.path, { force: true });
+        
+        if (fs.existsSync('./unzip')) {
+            fs.rmSync('./unzip', { recursive: true, force: true });
+        }
+
+        res.download('./upload.zip', 'report_analisis.zip', (err) => {
+            if (err) {
+                console.error("Error al enviar archivo:", err);
+                if (!res.headersSent) {
+                    res.status(500).send({ message: "Error enviando el archivo" });
+                }
+            }
+            // Cleanup the generated zip after sending
+            if (fs.existsSync('./upload.zip')) {
+                fs.rmSync('./upload.zip', { force: true });
+            }
+        });
     } catch (error) {
-        console.error(error)
-        res.status(500).send({ message: error.message })
+        console.error(error);
+        if (!res.headersSent) {
+            res.status(500).send({ message: error.message });
+        }
     }
 }
 

@@ -178,7 +178,7 @@
                         style="border-color: rgba(192,132,252,0.3);"
                         onmouseover="this.style.borderColor='rgba(0,230,118,0.5)'; this.style.boxShadow='0 0 30px rgba(0,230,118,0.08)'"
                         onmouseout="this.style.borderColor='rgba(192,132,252,0.3)'; this.style.boxShadow=''">
-                        <input type="file" id="file-input" class="hidden">
+                        <input type="file" id="file-input" class="hidden" accept=".zip">
 
                         <div id="upload-prompt" class="relative z-10">
                             <div class="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform"
@@ -231,11 +231,16 @@
                                 <i class="fa-solid fa-terminal text-xl" style="color: var(--purple);"></i>
                                 REPORT_SUMMARY.LOG
                             </h2>
-                            <button onclick="resetScanner()"
-                                class="bg-white/5 hover:bg-white/10 text-white px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition"
-                                style="border: 1px solid rgba(255,255,255,0.1);">
-                                Nuevo Escaneo
-                            </button>
+                            <div class="flex gap-4">
+                                <button id="download-report-btn" class="hidden bg-green-500/20 hover:bg-green-500/30 text-green-400 px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition" style="border: 1px solid rgba(0,230,118,0.3);">
+                                    <i class="fa-solid fa-download mr-2"></i> Descargar Reporte
+                                </button>
+                                <button onclick="resetScanner()"
+                                    class="bg-white/5 hover:bg-white/10 text-white px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition"
+                                    style="border: 1px solid rgba(255,255,255,0.1);">
+                                    Nuevo Escaneo
+                                </button>
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
