@@ -64,6 +64,28 @@
             if (e.target.tagName !== 'BUTTON' && !e.target.closest('button')) fileInput.click();
         };
 
+        dropZone.ondragover = (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'rgba(0,230,118,0.5)';
+            dropZone.style.boxShadow = '0 0 30px rgba(0,230,118,0.08)';
+        };
+
+        dropZone.ondragleave = (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'rgba(192,132,252,0.3)';
+            dropZone.style.boxShadow = '';
+        };
+
+        dropZone.ondrop = (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'rgba(192,132,252,0.3)';
+            dropZone.style.boxShadow = '';
+            if (e.dataTransfer.files.length > 0) {
+                fileInput.files = e.dataTransfer.files;
+                fileInput.dispatchEvent(new Event('change'));
+            }
+        };
+
         fileInput.onchange = (e) => {
             if (e.target.files.length > 0) {
                 document.getElementById('upload-prompt').classList.add('hidden');
@@ -78,6 +100,11 @@
             const file = fileInput.files[0];
             if (!file) {
                 alert("Por favor selecciona un archivo.");
+                return;
+            }
+
+            if (!file.name.toLowerCase().endsWith('.zip')) {
+                alert("Por favor selecciona un archivo .zip.");
                 return;
             }
 
@@ -105,16 +132,18 @@
                 document.getElementById('result-container').classList.remove('hidden');
                 
                 const tbody    = document.getElementById('history-table-body');
-                const newRow   = `
-                    <tr class="hover:bg-white/5 transition animate-pulse" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                        <td class="p-5 flex items-center gap-3"><i class="fa-solid fa-file text-gray-500"></i> <span class="mono-text">${file.name}</span></td>
-                        <td class="p-5 text-gray-400">Justo ahora</td>
-                        <td class="p-5"><span class="bg-white/10 px-3 py-1 rounded-full text-xs">Desconocido</span></td>
-                        <td class="p-5 font-bold text-red-400">82%</td>
-                        <td class="p-5"><span class="text-red-400 text-xs font-bold"><i class="fa-solid fa-ban"></i> Crítico</span></td>
-                    </tr>
-                `;
-                tbody.insertAdjacentHTML('afterbegin', newRow);
+                if (tbody) {
+                    const newRow   = `
+                        <tr class="hover:bg-white/5 transition animate-pulse" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <td class="p-5 flex items-center gap-3"><i class="fa-solid fa-file text-gray-500"></i> <span class="mono-text">${file.name}</span></td>
+                            <td class="p-5 text-gray-400">Justo ahora</td>
+                            <td class="p-5"><span class="bg-white/10 px-3 py-1 rounded-full text-xs">Desconocido</span></td>
+                            <td class="p-5 font-bold text-red-400">82%</td>
+                            <td class="p-5"><span class="text-red-400 text-xs font-bold"><i class="fa-solid fa-ban"></i> Crítico</span></td>
+                        </tr>
+                    `;
+                    tbody.insertAdjacentHTML('afterbegin', newRow);
+                }
 
             } catch (error) {
                 console.error("Upload error:", error);
