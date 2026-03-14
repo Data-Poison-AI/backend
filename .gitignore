@@ -6,3 +6,5 @@
 /node_modules
 #vs
 /.vs-code
+#AI models
+/ai/models/
