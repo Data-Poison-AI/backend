@@ -1,4 +1,6 @@
+import uuid
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from typing import Optional
 from pathlib import Path
 # Get directories
@@ -40,12 +42,17 @@ class PoisonAIConfig:
     influence_sample_size: int = 500    # How many samples to compute influence for
     activation_clusters: int = 5
 
-    # --- Output ---
-    output_dir: str = "./poison_ai_output"
+    # --- Output ---.
+    timestamp : str = field(
+        default_factory=lambda: datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    )
+    output_dir: Optional[str] = None    # dinamically generated to create output per instance (user peitition) -> can be fetched from express
     report_format: str = "json"         # json | html
 
     def __post_init__(self):
         """Resolve dta_path relative to uploads directory"""
+        if not self.output_dir:
+            self.output_dir = f".poison_ai_output_{self.timestamp}_{uuid.uuid4().hex[:4]}" #creates haxe to ensure uniqueness even at the same second
         if self.data_path:
             self.data_path = self._resolve_data_path(self.data_path)
     def _resolve_data_path(self, path: str)-> str:

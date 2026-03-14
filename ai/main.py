@@ -18,6 +18,7 @@ from reverse_engineer.activation import get_representations, spectral_signature_
 from reverse_engineer.tracer import compute_suspicion_scores
 from report.generator import generate_report
 from report.cleaner import clean_dataset
+from report.exporter import export_report_json #exporter to transform into .zip
 
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
@@ -104,9 +105,8 @@ def main():
     # ── 8. Report & clean ─────────────────────────────────
     report = generate_report(cfg, findings, suspicion, stats, cfg.output_dir)
     clean_ds, flagged_ds = clean_dataset(dataset, suspicion, args.threshold)
-
-    clean_path   = Path(cfg.output_dir) / "clean_data.json"
-    flagged_path = Path(cfg.output_dir) / "flagged_data.json"
+    clean_path   = Path(cfg.output_dir) / f"clean_data-{cfg.timestamp}.json"
+    flagged_path = Path(cfg.output_dir) / f"flagged_data-{cfg.timestamp}.json"
     clean_ds.to_json(clean_path)
     flagged_ds.to_json(flagged_path)
 
@@ -114,7 +114,8 @@ def main():
     print(f"   Clean samples  : {len(clean_ds):,}  → {clean_path}")
     print(f"   Flagged samples: {len(flagged_ds):,}  → {flagged_path}")
     print(f"   Report         : {Path(cfg.output_dir) / 'report.json'}")
-
+    #remove fine-tunned ai models and export
+    export_report_json(cfg)
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 import numpy as np
 from scanner.base_scan import ScanFinding
 from config import PoisonAIConfig
@@ -17,7 +17,7 @@ def generate_report(
     out.mkdir(parents=True, exist_ok=True)
 
     report = {
-        "generated_at": datetime.utcnow().isoformat(),
+        "generated_at": datetime.now(timezone.utc).isoformat(),
         "config": {
             "model": cfg.base_model,
             "task": cfg.task,
@@ -40,8 +40,7 @@ def generate_report(
             np.argsort(suspicion_scores)[::-1][:20].tolist()
         ),
     }
-
-    report_path = out / "report.json"
+    report_path = out / f"report-{cfg.timestamp}.json"
     report_path.write_text(json.dumps(report, indent=2))
     print(f"\n📄 Report saved to {report_path}")
     return report

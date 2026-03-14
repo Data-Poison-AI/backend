@@ -10,3 +10,4 @@
 /ai/models/
 #python
 **/__pycache__/
+**/sandbox_model/
