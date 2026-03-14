@@ -1,5 +1,10 @@
 from dataclasses import dataclass, field
 from typing import Optional
+from pathlib import Path
+# Get directories
+CONFIG_DIR = Path(__file__).parent.resolve() # Gets utils parent -> ai
+PROJECT_ROOT = CONFIG_DIR.parent
+UPLOADS_DIR = PROJECT_ROOT / "backend" / "uploads"
 
 @dataclass
 class PoisonAIConfig:
@@ -38,3 +43,35 @@ class PoisonAIConfig:
     # --- Output ---
     output_dir: str = "./poison_ai_output"
     report_format: str = "json"         # json | html
+
+    def __post_init__(self):
+        """Resolve dta_path relative to uploads directory"""
+        if self.data_path:
+            self.data_path = self._resolve_data_path(self.data_path)
+    def _resolve_data_path(self, path: str)-> str:
+        """
+        Resolve data path with smart lookup:
+        1. If absodule path -> use as-is
+        2. If exists relative to CWD -> use as-is
+        3. Otherwise -> look in uploads directory
+        """
+        path_obj = Path(path)
+        if path_obj.is_absolute():
+            return str(path_obj)
+
+        # Case 2: Exists relative to current working directory
+        if path_obj.exists():
+            return str(path_obj.resolve())
+
+        # Case 3: Look in uploads directory
+        uploads_path = UPLOADS_DIR / path_obj.name  # Use just filename
+        if uploads_path.exists():
+            return str(uploads_path)
+
+        # Case 4: Try full relative path in uploads
+        uploads_path_full = UPLOADS_DIR / path_obj
+        if uploads_path_full.exists():
+            return str(uploads_path_full)
+
+        # Not found anywhere - return uploads path (will error later with clear message)
+        return str(UPLOADS_DIR / path_obj.name) #If working along with express, only this one should be executed

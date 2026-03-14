@@ -8,7 +8,7 @@ Usage:
 import argparse
 from pathlib import Path
 
-from config import PoisonAIConfig
+from config import PoisonAIConfig, UPLOADS_DIR  #imports config and uploads directory
 from ingestion.loader import load_data
 from ingestion.validator import validate
 from sandbox.model_registry import resolve_model
@@ -24,26 +24,43 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 def main():
     parser = argparse.ArgumentParser(description="Poison AI")
-    parser.add_argument("--data",  required=True, help="Path to training data")
+    parser.add_argument("--data",  required=True, help="Dataset filename or path")
     parser.add_argument("--task",  default="text-classification")
     parser.add_argument("--model", default="auto")
     parser.add_argument("--epochs", type=int, default=3)
     parser.add_argument("--threshold", type=float, default=0.7,
                         help="Suspicion score threshold for flagging")
     parser.add_argument("--output", default="./poison_ai_output")
+    parser.add_argument("--text-column", default="text")
+    parser.add_argument("--label-column", default="label")
     args = parser.parse_args()
 
+    model_path = resolve_model(args.task, args.model)
     # ── 1. Configure ──────────────────────────────────────
     cfg = PoisonAIConfig(
         data_path=args.data,
         task=args.task,
-        base_model=resolve_model(args.task, args.model),
+        base_model=model_path,
         epochs=args.epochs,
         output_dir=args.output,
+        text_column=args.text_column,
+        label_column=args.label_column
     )
-    print(f"🧪 Poison AI — analysing: {cfg.data_path}")
-    print(f"   Model : {cfg.base_model}")
-    print(f"   Task  : {cfg.task}\n")
+    if not Path(cfg.data_path).exists():
+        print(f"❌  Error: Dataset not found!")
+        print(f"    Looked for: {args.data}")
+        print(f"    Resolved to: {cfg.data_path}")
+        print(f"    Uploads directory: {UPLOADS_DIR}")
+        print(f"\n      Available files in uploads:")
+        if UPLOADS_DIR.exists():
+            for f in UPLOADS_DIR.iterdir():
+                print(f"      - {f.name}")
+        return
+
+    print(f"✅  Using dataset: {cfg.data_path}")
+    print(f"    Poison AI — analysing: {cfg.data_path}")
+    print(f"    Model : {cfg.base_model}")
+    print(f"    Task  : {cfg.task}\n")
 
     # ── 2. Ingest & validate ──────────────────────────────
     dataset = load_data(cfg.data_path)
@@ -55,12 +72,14 @@ def main():
     # ── 3. Sandboxed fine-tuning ──────────────────────────
     print("🔬 Fine-tuning in sandbox …")
     ft = SandboxFineTuner(cfg, dataset, num_labels)
-    model_path = ft.run()
-    print(f"   ✅ Model saved: {model_path}\n")
+    finetuned_model_path = ft.run()
+    print(f"   ✅ Model saved: {finetuned_model_path}\n")
 
     # ── 4. Load fine-tuned model for scanning ─────────────
-    model     = AutoModelForSequenceClassification.from_pretrained(model_path,
-                    output_hidden_states=True)
+    model     = AutoModelForSequenceClassification.from_pretrained(
+        finetuned_model_path,
+        output_hidden_states=True
+    )
     tokenizer = AutoTokenizer.from_pretrained(cfg.base_model)
 
     # ── 5. Run vulnerability scans ────────────────────────

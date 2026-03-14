@@ -8,3 +8,5 @@
 /.vs-code
 #AI models
 /ai/models/
+#python
+**/__pycache__/
