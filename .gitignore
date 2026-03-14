@@ -1,0 +1,13 @@
+#.env
+.env
+# obsidian
+.obsidian/
+# node
+/node_modules
+#vs
+/.vs-code
+#AI models
+/ai/models/
+#python
+**/__pycache__/
+**/sandbox_model/
