@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoisonAI | IA Scanner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#07040f',
+                        cardbg: '#0e0918',
+                        brandpurple: '#c084fc',
+                        brandgreen: '#00e676',
+                        danger: '#ef4444'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { boxShadow: '0 0 8px #c084fc, 0 0 16px #c084fc' },
+                            '100%': { boxShadow: '0 0 20px #00e676, 0 0 40px #00e676' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Bloquear carga de página si no está logueado -->
+    <script>
+        if (!localStorage.getItem('user')) {
+            window.location.replace('login.html');
+        }
+    </script>
+</head>
+
+<body class="h-screen flex tech-grid">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar-transition w-72 flex flex-col p-6 z-30 backdrop-blur-2xl">
+
+
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-3 mb-10 px-2 group cursor-pointer"
+            style="text-decoration:none; color:inherit;">
+            <div class="relative w-10 h-10">
+                <div class="absolute inset-0 blur-md opacity-50 group-hover:opacity-90 transition"
+                    style="background: var(--purple);"></div>
+                <div class="relative w-10 h-10 bg-black border rounded-xl flex items-center justify-center overflow-hidden"
+                    style="border-color: rgba(192,132,252,0.4);">
+                    <i class="fa-solid fa-shield-halved text-xl group-hover:rotate-180 transition-transform duration-700"
+                        style="color: var(--green);"></i>
+                </div>
+            </div>
+            <span class="sidebar-text font-extrabold text-xl tracking-tighter">
+                POISON<span style="color: var(--green);">AI</span>
+            </span>
+        </a>
+
+        <!-- Nav -->
+        <nav class="flex-grow space-y-2">
+            <p class="sidebar-text text-[10px] font-bold uppercase tracking-[0.2em] mb-4"
+                style="color: rgba(192,132,252,0.5);">Menú Principal</p>
+
+            <button onclick="switchView('view-scanner')" id="nav-scanner"
+                class="nav-btn active-nav-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all group">
+                <i class="fa-solid fa-atom group-hover:animate-spin" style="color: var(--purple);"></i>
+                <span class="sidebar-text font-bold">IA Scanner</span>
+            </button>
+
+
+            <!-- referencia a perfil -->
+            <button onclick="switchView('view-profile')" id="nav-profile"
+                class="nav-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition-all group">
+                <i class="fa-solid fa-user-shield group-hover:transition-colors"></i>
+                <span class="sidebar-text font-bold">Mi Perfil</span>
+            </button>
+            <!-- documentacion -->
+            <a href="docs.html"
+                class="nav-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition-all group">
+                <i class="fa-solid fa-book-code" style="color: var(--purple); opacity: 0.7;"></i>
+                <span class="sidebar-text font-bold">Documentación</span>
+            </a>
+
+
+        </nav>
+
+        <!-- Collapse button -->
+        <button onclick="toggleSidebar()" class="mb-6 flex items-center gap-4 px-4 py-3 text-gray-500 transition-all"
+            style="--tw-text-opacity:1;" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color=''">
+            <i id="collapse-icon" class="fa-solid fa-chevron-left"></i>
+            <span class="sidebar-text text-sm font-bold">Contraer panel</span>
+        </button>
+
+        <!-- User card -->
+        <div class="p-4 glass-card rounded-2xl flex items-center gap-3 cursor-pointer"
+            onclick="switchView('view-profile')" style="border-color: rgba(0,230,118,0.15);"
+            onmouseover="this.style.borderColor='rgba(192,132,252,0.4)'"
+            onmouseout="this.style.borderColor='rgba(0,230,118,0.15)'">
+            <div class="relative">
+                <img src="https://ui-avatars.com/api/?name=User&background=00e676&color=07040f&bold=true"
+                    class="w-10 h-10 rounded-lg" style="box-shadow: 0 0 10px rgba(0,230,118,0.3);" alt="Avatar">
+                <div class="absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 animate-pulse"
+                    style="background: var(--green); border-color: var(--bg);"></div>
+            </div>
+            <div class="sidebar-text">
+                <p class="text-xs font-bold text-white" id="user-display-name">Cargando...</p>
+                <p class="text-[10px] font-bold tracking-widest uppercase" style="color: var(--purple);">Analista Senior
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="flex-grow flex flex-col overflow-hidden relative">
+
+        <!-- Header -->
+        <header class="h-20 flex items-center justify-between px-10 z-10 backdrop-blur-xl">
+        </header>
+
+        <!-- Content -->
+        <div class="flex-grow overflow-y-auto p-10">
+            <div class="max-w-6xl mx-auto">
+
+                <!-- SCANNER VIEW -->
+                <section id="view-scanner" class="view-section active">
+                    <div class="mb-12">
+                        <h1 class="text-5xl font-extrabold tracking-tighter mb-4">
+                            Escaneo de <span class="gradient-title">Amenazas IA</span>
+                        </h1>
+                        <p class="text-gray-400 max-w-2xl text-lg">Carga archivos sospechosos para realizar un análisis
+                            forense profundo mediante heurística neuronal y detección de patrones maliciosos.</p>
+                    </div>
+
+                    <!-- Type cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                        <div onclick="selectType('image')" id="type-image"
+                            class="type-card glass-card p-8 rounded-3xl cursor-pointer hover:-translate-y-2 group relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full blur-xl transition group-hover:opacity-100 opacity-50"
+                                style="background: var(--purple-subtle);"></div>
+                            <div class="w-14 h-14 rounded-2xl bg-black/50 flex items-center justify-center mb-6 transition"
+                                style="border: 1px solid rgba(255,255,255,0.08);"
+                                onmouseover="this.style.borderColor='rgba(192,132,252,0.5)'"
+                                onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+                                <i class="fa-regular fa-image text-2xl text-gray-400 group-hover:transition"></i>
+                            </div>
+                            <h3 class="font-black text-xl mb-2">Imágenes</h3>
+                            <p class="text-sm text-gray-500">Detección de esteganografía y malware embebido en pixeles.
+                                <br> -> envia archivos.zip
+                            </p>
+                        </div>
+
+                        <div onclick="selectType('text')" id="type-text"
+                            class="type-card glass-card p-8 rounded-3xl cursor-pointer hover:-translate-y-2 group relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 w-24 h-24 rounded-full blur-xl transition group-hover:opacity-100 opacity-50"
+                                style="background: rgba(96,165,250,0.1);"></div>
+                            <div class="w-14 h-14 rounded-2xl bg-black/50 flex items-center justify-center mb-6 transition"
+                                style="border: 1px solid rgba(255,255,255,0.08);">
+                                <i class="fa-regular fa-file-code text-2xl text-gray-400"></i>
+                            </div>
+                            <h3 class="font-black text-xl mb-2">Documentos</h3>
+                            <p class="text-sm text-gray-500">Análisis de scripts ocultos, macros y URLs ofuscadas. <br>
+                                -> envia archivos.zip</p>
+                        </div>
+                    </div>
+
+                    <!-- Drop zone -->
+                    <div id="drop-zone"
+                        class="glass-card rounded-[3rem] p-20 border-dashed border-2 text-center relative overflow-hidden group transition-all cursor-pointer"
+                        style="border-color: rgba(192,132,252,0.3);"
+                        onmouseover="this.style.borderColor='rgba(0,230,118,0.5)'; this.style.boxShadow='0 0 30px rgba(0,230,118,0.08)'"
+                        onmouseout="this.style.borderColor='rgba(192,132,252,0.3)'; this.style.boxShadow=''">
+                        <input type="file" id="file-input" class="hidden" accept=".zip">
+
+                        <div id="upload-prompt" class="relative z-10">
+                            <div class="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform"
+                                style="background: linear-gradient(135deg, var(--purple-subtle), var(--green-subtle)); border: 1px solid rgba(255,255,255,0.05);">
+                                <i class="fa-solid fa-cloud-arrow-up text-4xl text-white"></i>
+                            </div>
+                            <h2 class="text-2xl font-black mb-3">Suelta el archivo para analizar</h2>
+                            <p class="font-medium" style="color: #6b7280;">O haz clic para explorar tus archivos locales
+                            </p>
+                        </div>
+
+                        <div id="file-info" class="hidden relative z-10">
+                            <div class="inline-flex items-center gap-4 bg-black/50 px-8 py-4 rounded-full mb-8"
+                                style="border: 1px solid rgba(0,230,118,0.3); box-shadow: 0 0 20px rgba(0,230,118,0.15);">
+                                <i class="fa-solid fa-file-shield text-xl" style="color: var(--green);"></i>
+                                <span class="text-lg font-bold mono-text text-white"
+                                    id="selected-filename">archivo.png</span>
+                            </div>
+                            <br>
+
+
+                            <button onclick="processAnalysis(event)"
+                                class="text-black px-12 py-5 rounded-2xl font-black tracking-widest text-sm uppercase transition-all hover:scale-105 active:scale-95"
+                                style="background: var(--green); box-shadow: 0 10px 30px rgba(0,230,118,0.4);"
+                                onmouseover="this.style.background='#33eb91'"
+                                onmouseout="this.style.background='var(--green)'">
+                                Iniciar Escaneo Neural <i class="fa-solid fa-bolt ml-2"></i>
+                            </button>
+                        </div>
+
+                        <div id="scanning-loader" class="hidden py-12">
+                            <div class="relative w-3/4 mx-auto h-2 bg-black rounded-full overflow-hidden mb-8"
+                                style="border: 1px solid rgba(255,255,255,0.08);">
+                                <div class="scan-line"></div>
+                            </div>
+                            <div class="flex items-center justify-center gap-3">
+                                <i class="fa-solid fa-microchip animate-pulse" style="color: var(--purple);"></i>
+                                <p class="mono-text text-sm font-bold tracking-widest animate-pulse uppercase"
+                                    style="color: var(--green);">
+                                    Descomponiendo vectores... Analizando cabeceras... Buscando payloads...
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result -->
+                    <div id="result-container" class="hidden mt-10">
+                        <div class="flex items-center justify-between mb-8">
+                            <h2 class="text-3xl font-black italic tracking-tighter flex items-center gap-3">
+                                <i class="fa-solid fa-terminal text-xl" style="color: var(--purple);"></i>
+                                REPORT_SUMMARY.LOG
+                            </h2>
+                            <div class="flex gap-4">
+                                <button id="download-report-btn" class="hidden bg-green-500/20 hover:bg-green-500/30 text-green-400 px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition" style="border: 1px solid rgba(0,230,118,0.3);">
+                                    <i class="fa-solid fa-download mr-2"></i> Descargar Reporte
+                                </button>
+                                <button onclick="resetScanner()"
+                                    class="bg-white/5 hover:bg-white/10 text-white px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition"
+                                    style="border: 1px solid rgba(255,255,255,0.1);">
+                                    Nuevo Escaneo
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="glass-card p-10 rounded-[2.5rem] flex flex-col items-center justify-center text-center relative"
+                                style="border-color: rgba(239,68,68,0.4); box-shadow: 0 0 30px rgba(239,68,68,0.12);">
+                                <div class="absolute top-6 right-6">
+                                    <span class="flex h-4 w-4">
+                                        <span
+                                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                                        <span
+                                            class="relative inline-flex rounded-full h-4 w-4 bg-red-500 border border-black"></span>
+                                    </span>
+                                </div>
+                                <h4 class="text-xs font-black text-red-400 uppercase tracking-[0.4em] mb-6">Risk Factor
+                                </h4>
+                                <div class="text-8xl font-black text-red-400 mb-4"
+                                    style="filter: drop-shadow(0 0 15px rgba(239,68,68,0.5));">82<span
+                                        class="text-4xl">%</span></div>
+                                <div class="bg-red-500/10 text-red-400 px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest"
+                                    style="border: 1px solid rgba(239,68,68,0.25);">Critical Threat</div>
+                            </div>
+
+                            <div class="lg:col-span-2 glass-card p-10 rounded-[2.5rem] relative overflow-hidden">
+                                <div class="absolute top-0 right-0 w-64 h-64 rounded-full blur-[80px]"
+                                    style="background: rgba(239,68,68,0.05);"></div>
+                                <div class="space-y-5 relative z-10">
+                                    <div class="flex items-start gap-5 p-5 rounded-2xl bg-black/40 transition"
+                                        style="border: 1px solid rgba(239,68,68,0.2);"
+                                        onmouseover="this.style.borderColor='rgba(239,68,68,0.5)'"
+                                        onmouseout="this.style.borderColor='rgba(239,68,68,0.2)'">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center shrink-0">
+                                            <i class="fa-solid fa-bug text-red-400"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-lg font-black text-white mb-1">Malware Polimórfico</p>
+                                            <p class="text-sm text-gray-400">Se detectó una secuencia de bytes que
+                                                coincide con patrones de exfiltración de datos.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-5 p-5 rounded-2xl bg-black/40 transition"
+                                        style="border: 1px solid rgba(249,115,22,0.2);"
+                                        onmouseover="this.style.borderColor='rgba(249,115,22,0.5)'"
+                                        onmouseout="this.style.borderColor='rgba(249,115,22,0.2)'">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center shrink-0">
+                                            <i class="fa-solid fa-mask text-orange-400"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-lg font-black text-white mb-1">Metadata Manipulada</p>
+                                            <p class="text-sm text-gray-400">Los campos EXIF han sido alterados para
+                                                ocultar el origen real del archivo.</p>
+                                        </div>
+                                    </div>
+                                    <div class="p-6 rounded-2xl"
+                                        style="background: var(--green-subtle); border: 1px solid rgba(0,230,118,0.3);">
+                                        <p class="text-xs font-black uppercase tracking-widest flex items-center gap-2 mb-3"
+                                            style="color: var(--green);">
+                                            <i class="fa-solid fa-robot"></i> Recomendación de la IA
+                                        </p>
+                                        <p class="text-sm text-white font-medium leading-relaxed">Poner en cuarentena
+                                            inmediata. No abrir en entornos de producción. El archivo contiene un
+                                            payload de esteganografía en los bits menos significativos (LSB).</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- PROFILE VIEW -->
+                <section id="view-profile" class="view-section">
+                    <div class="mb-12">
+                        <h1 class="text-5xl font-extrabold tracking-tighter mb-4">
+                            Perfil de <span style="color: var(--purple);">Usuario</span>
+                        </h1>
+                        <p class="text-gray-400 text-lg">Gestiona tu información de cuenta y seguridad.</p>
+                    </div>
+
+                    <div class="flex justify-center items-center">
+                        <div class="glass-card w-full max-w-lg p-10 rounded-[2.5rem] text-center flex flex-col items-center"
+                            style="border-color: rgba(192,132,252,0.2);">
+                            <div class="relative mb-6">
+                                <div class="absolute inset-0 blur-xl opacity-20 rounded-full"
+                                    style="background: var(--green);"></div>
+                                <img src="https://ui-avatars.com/api/?name=User&background=00e676&color=07040f&bold=true&size=128"
+                                    class="w-32 h-32 rounded-full relative z-10" id="profile-avatar"
+                                    style="border: 4px solid var(--bg);" alt="Avatar">
+                            </div>
+
+                            <!-- informacion usuario -->
+                            <h2 class="text-2xl font-black mb-1" id="profile-name">Cargando...</h2>
+                            <p class="text-xs font-bold uppercase tracking-widest mb-6" style="color: var(--purple);">
+                                Usuario Registrado</p>
+
+                            <div class="w-full bg-black/40 p-4 rounded-xl mb-6 text-left space-y-3"
+                                style="border: 1px solid rgba(255,255,255,0.05);">
+                                <div>
+                                    <p class="text-[10px] text-gray-500 uppercase tracking-widest">Email</p>
+                                    <p class="text-sm font-bold" id="profile-email">cargando...</p>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] text-gray-500 uppercase tracking-widest">Fecha de Registro</p>
+                                    <p class="text-sm font-bold" id="profile-joined">Cargando...</p>
+                                </div>
+                            </div>
+
+                            <button id="logout-btn"
+                                class="w-full text-red-400 hover:bg-red-500/10 px-4 py-3 rounded-xl font-bold transition"
+                                style="border: 1px solid rgba(239,68,68,0.3);">
+                                Cerrar Sesión
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/scanner.js"></script>
+</body>
+
+</html>

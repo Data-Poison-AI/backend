@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoisonAI | Advanced Cyber-IA</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#030305',
+                        brandpurple: '#a855f7',
+                        brandgreen: '#22c55e',
+                        toxic: '#39ff14'
+                    }
+                }
+            }
+        }
+    </script>
+
+
+</head>
+
+<body class="min-h-screen">
+
+    <!-- navbar  ... -->
+    <nav class="nav-glass sticky top-0 z-[100] transition-all">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 group cursor-pointer"
+                style="text-decoration:none; color:inherit;">
+                <div class="relative">
+                    <i
+                        class="fa-solid fa-shield-halved text-brandgreen text-2xl group-hover:rotate-[360deg] transition-transform duration-700"></i>
+                    <div class="absolute inset-0 bg-brandgreen/40 blur-md"></div>
+                </div>
+                <span class="text-xl font-bold tracking-tighter uppercase">Poison<span class="text-brandgreen">
+                        AI</span></span>
+            </a>
+            <div class="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-widest">
+                <a href="#" class="text-brandpurple">Inicio</a>
+                <a href="docs.html" class="text-gray-400 hover:text-white transition">Documentación</a>
+                <a href="#" class="text-gray-400 hover:text-white transition">Contacto</a>
+                <a href="login.html"
+                    class="bg-gradient-to-r from-brandpurple to-brandgreen text-white px-6 py-2 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:scale-105 transition">Iniciar
+                    Sesión</a>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <section class="container mx-auto px-6 py-24 grid lg:grid-cols-2 gap-16 items-center">
+        <div data-aos="fade-right">
+            <h1 class="text-7xl font-extrabold mb-8 leading-tight tracking-tighter">
+                Detección de <br>
+                <span class="toxic-text">Amenazas IA</span>
+            </h1>
+            <p class="text-gray-400 text-xl mb-12 max-w-lg leading-relaxed">
+                Nuestra IA avanzada está entrenada para detectar contenido malicioso oculto en <span
+                    class="text-white border-b border-brandpurple">imágenes</span>, <span
+                    class="text-white border-b border-brandpurple">archivos de texto</span> y <span
+                    class="text-white border-b border-brandgreen">código fuente</span>.
+            </p>
+            <div class="flex flex-wrap gap-6 mb-16">
+                <button
+                    class="bg-brandgreen text-black px-10 py-4 rounded-xl font-black uppercase tracking-widest hover:bg-toxic transition-all shadow-[0_0_30px_rgba(34,197,94,0.3)] flex items-center gap-3">
+                    <a class="fa-solid fa-bolt" href="./scanner.html"> probar la ia</a>
+                </button>
+                <button
+                    class="glass-card text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest border border-white/10 hover:bg-white/5 transition">
+                    <a href="docs.html">DOCUMENTACIÓN</a>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="group">
+                    <div class="text-3xl font-black text-white group-hover:text-brandgreen transition">97.3%</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-widest">Precisión</div>
+                </div>
+                <div class="group">
+                    <div class="text-3xl font-black text-white group-hover:text-brandgreen transition">&lt;3s</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-widest">Análisis</div>
+                </div>
+                <div class="group">
+                    <div class="text-3xl font-black text-white group-hover:text-brandgreen transition">2M+</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-widest">Muestras</div>
+                </div>
+                <div class="group">
+                    <div class="text-3xl font-black text-white group-hover:text-brandgreen transition">0.8%</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-widest">Falsos Pos.</div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="relative" data-aos="zoom-in">
+            <div class="absolute -inset-10 bg-brandpurple/20 blur-[120px] rounded-full opacity-30"></div>
+            <div class="glass-card rounded-[2.5rem] p-10 border border-white/10 relative overflow-hidden shadow-2xl">
+                <div class="scanner-line"></div>
+
+                <div class="flex justify-between items-center mb-10">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-microchip text-brandgreen text-xl animate-pulse"></i>
+                        <span class="text-xs font-mono text-gray-400">STATUS ANALYSIS: RUNNING</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                        <div class="w-3 h-3 rounded-full bg-brandgreen"></div>
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <div class="bg-black/40 rounded-2xl p-6 border border-brandgreen/10">
+                        <div class="text-xs text-gray-500 mb-2 font-mono">ID_SAMPLE: #9928-AX</div>
+                        <div class="text-lg font-bold text-white mb-4">malware_sample.zip</div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-brandpurple to-brandgreen w-[91%]"></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-red-500/10 border border-red-500/20 p-4 rounded-xl">
+                            <div class="text-[10px] uppercase text-red-500 font-black mb-1">Riesgo Detectado</div>
+                            <div class="text-2xl font-black text-white">91%</div>
+                        </div>
+                        <div class="bg-brandgreen/10 border border-brandgreen/20 p-4 rounded-xl">
+                            <div class="text-[10px] uppercase text-brandgreen font-black mb-1">Integridad</div>
+                            <div class="text-2xl font-black text-white">9%</div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div
+                            class="flex items-center gap-3 text-xs text-red-400 bg-red-500/5 p-3 rounded-lg border border-red-500/10">
+                            <i class="fa-solid fa-bug"></i> Backdoor detectado en 142 archivos
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 relative overflow-hidden">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-black mb-4 uppercase tracking-tighter" data-aos="fade-up">Tecnologías <span
+                    class="text-brandgreen">Poison</span></h2>
+            <p class="text-gray-500 mb-16" data-aos="fade-up">El ecosistema más avanzado de IA en ciberseguridad.</p>
+
+            <div class="flex flex-wrap justify-center gap-8" data-aos="fade-up">
+                <div class="glass-card p-8 rounded-3xl w-48 group">
+                    <i class="fa-solid fa-brain text-4xl mb-4 group-hover:text-brandpurple transition duration-500"></i>
+                    <div class="text-xs font-bold uppercase tracking-widest text-gray-400">Deep Learning</div>
+                </div>
+                <div class="glass-card p-8 rounded-3xl w-48 group">
+                    <i
+                        class="fa-solid fa-file-contract text-4xl mb-4 group-hover:text-brandgreen transition duration-500"></i>
+                    <div class="text-xs font-bold uppercase tracking-widest text-gray-400">NLP Analysis</div>
+                </div>
+                <div class="glass-card p-8 rounded-3xl w-48 group">
+                    <i class="fa-solid fa-eye text-4xl mb-4 group-hover:text-brandpurple transition duration-500"></i>
+                    <div class="text-xs font-bold uppercase tracking-widest text-gray-400">Computer Vision</div>
+                </div>
+                <div class="glass-card p-8 rounded-3xl w-48 group">
+                    <i
+                        class="fa-solid fa-bug-slash text-4xl mb-4 group-hover:text-brandgreen transition duration-500"></i>
+                    <div class="text-xs font-bold uppercase tracking-widest text-gray-400">Malware Det.</div>
+                </div>
+                <div class="glass-card p-8 rounded-3xl w-48 group">
+                    <i
+                        class="fa-solid fa-server text-4xl mb-4 group-hover:text-brandpurple transition duration-500"></i>
+                    <div class="text-xs font-bold uppercase tracking-widest text-gray-400">Cloud Infra</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 container mx-auto px-6">
+        <div class="mb-20 text-center" data-aos="fade-up">
+            <h2 class="text-5xl font-black mb-6 uppercase tracking-tighter">Problemas que <span
+                    class="text-brandgreen">resolvemos</span></h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">Neutralizamos amenazas invisibles con precisión atómica.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <div class="md:col-span-8 glass-card p-12 rounded-[2.5rem] group" data-aos="fade-up">
+                <div class="flex flex-col md:flex-row gap-10 items-center">
+                    <div
+                        class="w-20 h-20 rounded-2xl bg-brandgreen/10 flex items-center justify-center text-brandgreen text-4xl group-hover:shadow-[0_0_30px_rgba(34,197,94,0.3)] transition">
+                        <i class="fa-regular fa-image"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black mb-4 uppercase text-white">Esteganografía en Imágenes</h3>
+                        <p class="text-gray-400 leading-relaxed">Detecta datos ocultos, payloads embebidos y metadata
+                            maliciosa en archivos de imagen que pasan desapercibidos para antivirus tradicionales.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-4 glass-card p-10 rounded-[2.5rem] group" data-aos="fade-up" data-aos-delay="100">
+                <i class="fa-regular fa-file-lines text-3xl text-brandpurple mb-6 block"></i>
+                <h3 class="text-xl font-bold mb-3 uppercase">Phishing en Texto</h3>
+                <p class="text-sm text-gray-500">Identifica URLs ofuscadas y patrones de ingeniería social en segundos.
+                </p>
+            </div>
+
+            <div class="md:col-span-4 glass-card p-10 rounded-[2.5rem] group" data-aos="fade-up">
+                <i class="fa-solid fa-code text-3xl text-brandgreen mb-6 block"></i>
+                <h3 class="text-xl font-bold mb-3 uppercase">Backdoors en Código</h3>
+                <p class="text-sm text-gray-500">Escanea código fuente en busca de puertas traseras y conexiones C2.</p>
+            </div>
+
+            <div class="md:col-span-8 glass-card p-12 rounded-[2.5rem] group" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex flex-col md:flex-row gap-10 items-center">
+                    <div
+                        class="w-20 h-20 rounded-2xl bg-brandpurple/10 flex items-center justify-center text-brandpurple text-4xl group-hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] transition">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black mb-4 uppercase text-white">Zero-Day Exploits</h3>
+                        <p class="text-gray-400 leading-relaxed">Modelos entrenados con las últimas muestras de malware
+                            para detectar amenazas emergentes antes que las soluciones tradicionales.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-6 glass-card p-10 rounded-[2.5rem] group" data-aos="fade-up">
+                <i class="fa-solid fa-lock text-3xl text-brandgreen mb-6 block"></i>
+                <h3 class="text-xl font-bold mb-3 uppercase">Exfiltración de Datos</h3>
+                <p class="text-sm text-gray-500">Detecta intentos de robo de información sensible a través de canales
+                    encubiertos.</p>
+            </div>
+
+            <div class="md:col-span-6 glass-card p-10 rounded-[2.5rem] group" data-aos="fade-up" data-aos-delay="100">
+                <i class="fa-solid fa-bug text-3xl text-brandpurple mb-6 block"></i>
+                <h3 class="text-xl font-bold mb-3 uppercase">Supply Chain Attacks</h3>
+                <p class="text-sm text-gray-500">Analiza dependencias de código para identificar paquetes comprometidos.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-40 container mx-auto px-6">
+        <div class="relative rounded-[3rem] overflow-hidden p-20 text-center glass-card border-brandpurple/20"
+            data-aos="zoom-in">
+            <div class="absolute -top-24 -left-24 w-64 h-64 bg-brandgreen blur-[100px] opacity-20"></div>
+            <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-brandpurple blur-[100px] opacity-20"></div>
+
+            <h2 class="text-5xl font-black mb-8 tracking-tighter uppercase">Protege tus archivos <span
+                    class="text-brandgreen">ahora</span></h2>
+            <p class="text-gray-400 mb-12 max-w-xl mx-auto text-lg">Empieza a analizar tus archivos gratis. Sin tarjeta
+                de crédito requerida.</p>
+            <a class="bg-brandgreen text-white px-12 py-5 rounded-2xl font-black uppercase tracking-[0.2em] hover:bg-brandpurple transition-all shadow-2xl hover:scale-110 inline-block"
+                href="./scanner.html">
+                Comenzar Gratis
+            </a>
+        </div>
+    </section>
+
+    <footer class="pt-12 pb-6 mt-auto">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-shield-halved text-xl" style="color: var(--purple);"></i>
+                        <span class="text-lg font-bold tracking-wide">Data<span
+                                style="color: var(--green);">Poison</span></span>
+                    </div>
+                    <p class="text-xs" style="color: #6b5a8a;">Inteligencia artificial de detección de contenido
+                        malicioso.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-3 text-xs tracking-widest"
+                        style="color: #7a5aa0; font-family: 'Space Mono', monospace;">PRODUCTO</h4>
+                    <ul class="space-y-2 text-xs" style="color: #9a7abf;">
+                        <li><a href="#" class="hover:text-purple-400 transition">IA Scanner</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">Documentación</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">Planes</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-3 text-xs tracking-widest"
+                        style="color: #4a8a6a; font-family: 'Space Mono', monospace;">LEGAL</h4>
+                    <ul class="space-y-2 text-xs" style="color: #6aaa8a;">
+                        <li><a href="#" class="hover:text-green-400 transition">Términos de Uso</a></li>
+                        <li><a href="#" class="hover:text-green-400 transition">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-3 text-xs tracking-widest"
+                        style="color: #7a5aa0; font-family: 'Space Mono', monospace;">CONTACTO</h4>
+                    <ul class="space-y-2 text-xs" style="color: #9a7abf;">
+                        <li><a href="mailto:soporte@poisonai.ai"
+                                class="hover:text-purple-400 transition">soporte@poisonai.ai</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">Formulario de Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center pt-6"
+                style="border-top: 1px solid rgba(176,102,255,0.08); font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #4a3a6a;">
+                &copy; 2026 PoisonAI. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="../js/index.js"></script>
+</body>
+
+</html>

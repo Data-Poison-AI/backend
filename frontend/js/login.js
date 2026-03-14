@@ -1,0 +1,76 @@
+function toggleAuth() {
+    document.getElementById('login-container').classList.toggle('hidden');
+    document.getElementById('register-container').classList.toggle('hidden');
+}
+
+function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+}
+
+const API_BASE_URL = 'http://localhost:3000/api/auth';
+
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('reg-name').value;
+    const email = document.getElementById('reg-email').value;
+    const password = document.getElementById('reg-password').value;
+    const confirmPass = document.getElementById('reg-confirm-password').value;
+
+    if (password !== confirmPass) {
+        alert("Las contraseñas no coinciden.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: name, email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            toggleAuth();
+        } else {
+            alert(data.message || "Error al registrar la cuenta.");
+        }
+    } catch (error) {
+        console.error("Error signing up:", error);
+        alert("Error de conexión con el servidor.");
+    }
+});
+
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            localStorage.setItem('user', JSON.stringify(data));
+            window.location.href = 'scanner.html';
+        } else {
+            alert("Credenciales incorrectas. Inténtalo de nuevo.");
+        }
+    } catch (error) {
+        console.error("Error logging in:", error);
+        alert("Error de conexión con el servidor.");
+    }
+});
