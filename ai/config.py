@@ -32,7 +32,7 @@ class PoisonAIConfig:
 
     # --- Scanning ---
     scans: list[str] = field(default_factory=lambda: [
-        "backdoor", "bias", "integrity", "drift"
+        "backdoor", "integrity", "drift"
     ])
     anomaly_threshold: float = 0.05     # top 5 % flagged
 
