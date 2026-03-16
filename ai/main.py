@@ -64,7 +64,24 @@ def main():
     print(f"    Task  : {cfg.task}\n")
 
     # ── 2. Ingest & validate ──────────────────────────────
-    dataset = load_data(cfg.data_path)
+    try:
+        dataset = load_data(cfg.data_path)
+    except Exception as e:
+        print(f"❌ Error loading dataset: {e}. Check if the file format is supported.")
+        return
+
+    # Auto-detect columns if missing, to prevent crashing on random test files
+    if cfg.text_column not in dataset.column_names and len(dataset.column_names) > 0:
+        print(f"⚠️ Text column '{cfg.text_column}' not found. Auto-selecting '{dataset.column_names[0]}'")
+        cfg.text_column = dataset.column_names[0]
+        
+    if cfg.label_column and cfg.label_column not in dataset.column_names:
+        if len(dataset.column_names) > 1:
+            print(f"⚠️ Label column '{cfg.label_column}' not found. Auto-selecting '{dataset.column_names[-1]}'")
+            cfg.label_column = dataset.column_names[-1]
+        else:
+            cfg.label_column = None
+
     stats   = validate(dataset, cfg.text_column, cfg.label_column)
     print(f"📊 Data stats: {stats}\n")
 

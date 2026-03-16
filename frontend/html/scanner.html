@@ -79,7 +79,7 @@
 
             <!-- referencia a perfil -->
             <button onclick="switchView('view-profile')" id="nav-profile"
-                class="nav-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition-all group" >
+                class="nav-btn w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition-all group">
                 <i class="fa-solid fa-user-shield group-hover:transition-colors"></i>
                 <span class="sidebar-text font-bold">Mi Perfil</span>
             </button>
@@ -232,7 +232,9 @@
                                 REPORT_SUMMARY.LOG
                             </h2>
                             <div class="flex gap-4">
-                                <button id="download-report-btn" class="hidden bg-green-500/20 hover:bg-green-500/30 text-green-400 px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition" style="border: 1px solid rgba(0,230,118,0.3);">
+                                <button id="download-report-btn"
+                                    class="hidden bg-green-500/20 hover:bg-green-500/30 text-green-400 px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition"
+                                    style="border: 1px solid rgba(0,230,118,0.3);">
                                     <i class="fa-solid fa-download mr-2"></i> Descargar Reporte
                                 </button>
                                 <button onclick="resetScanner()"
@@ -256,11 +258,6 @@
                                 </div>
                                 <h4 class="text-xs font-black text-red-400 uppercase tracking-[0.4em] mb-6">Risk Factor
                                 </h4>
-                                <div class="text-8xl font-black text-red-400 mb-4"
-                                    style="filter: drop-shadow(0 0 15px rgba(239,68,68,0.5));">82<span
-                                        class="text-4xl">%</span></div>
-                                <div class="bg-red-500/10 text-red-400 px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest"
-                                    style="border: 1px solid rgba(239,68,68,0.25);">Critical Threat</div>
                             </div>
 
                             <div class="lg:col-span-2 glass-card p-10 rounded-[2.5rem] relative overflow-hidden">

@@ -68,14 +68,27 @@ class SandboxFineTuner:
         def tok(batch):
             return self.tokenizer(
                 batch[self.cfg.text_column],
+                padding="max_length",
                 truncation=True,
                 max_length=self.cfg.max_seq_length,
             )
-        tokenized =  dataset.map(tok, batched=True, remove_columns=[
-            c for c in dataset.column_names if c != self.cfg.label_column
-        ])
-        if self.cfg.label_column and self.cfg.label_column != "labels": #renames the label_column to "labels" for hugging face default (convention)
-            tokenized = tokenized.rename_column(self.cfg.label_column, "labels")
+        
+        # Tokenize and remove ALL original string columns to prevent PyTorch tensor stacking errors
+        columns_to_remove = dataset.column_names
+        tokenized = dataset.map(tok, batched=True, remove_columns=columns_to_remove)
+        
+        # If there's a label column, we need to map it back as 'labels' since we just removed it
+        if self.cfg.label_column in dataset.column_names:
+            labels_column = dataset[self.cfg.label_column]
+            
+            # Convert strings to integers so PyTorch can create numerical label tensors
+            if len(labels_column) > 0 and isinstance(labels_column[0], str):
+                unique_labels = sorted(list(set(labels_column)))
+                l2id = {label: i for i, label in enumerate(unique_labels)}
+                labels_column = [l2id[label] for label in labels_column]
+
+            tokenized = tokenized.add_column("labels", labels_column)
+            
         return tokenized
 
     # -------- custom Trainer that records per-sample loss --------

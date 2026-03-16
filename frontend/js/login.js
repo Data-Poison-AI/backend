@@ -17,8 +17,7 @@ function togglePassword(inputId, btn) {
     }
 }
 
-// API base URL
-const API_BASE_URL = 'http://localhost:3000/api/auth';
+const API_BASE_URL = '/api/auth';
 
 // event listeners
 document.getElementById('register-form').addEventListener('submit', async (e) => {

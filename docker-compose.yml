@@ -1,0 +1,51 @@
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./
+      dockerfile: backend/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - ./ai:/ai # Backend needs access to AI script to run it
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASSWORD=poisonteamiariwi
+      - DB_NAME=postgres
+      - DB_PORT=5432
+      - PORT=3000
+      # Set this to your production server IP/domain when deploying
+      # - FRONTEND_URL=http://YOUR_SERVER_IP
+      # - SERVER_URL=http://YOUR_SERVER_IP
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=poisonteamiariwi
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      # Mount source files so changes reflect without rebuild
+      - ./frontend:/usr/share/nginx/html
+      # Mount nginx config separately so it doesn't get overwritten
+      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
