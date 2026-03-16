@@ -1,8 +1,10 @@
 
-            document.addEventListener('DOMContentLoaded', function() {
+        //    traducción
+           document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('.sidebar-link');
 
+            // Función para resaltar el enlace activo en la barra lateral
             function highlightNavOnScroll() {
                 let scrollY = window.scrollY;
                 sections.forEach(current => {
@@ -18,7 +20,7 @@
             }
 
             window.addEventListener('scroll', highlightNavOnScroll);
-
+            // resaltar el enlace activo al hacer clic
             navLinks.forEach(link => {
                 link.addEventListener('click', function() {
                     navLinks.forEach(nav => nav.classList.remove('active'));

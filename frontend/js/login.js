@@ -1,8 +1,10 @@
+
 function toggleAuth() {
     document.getElementById('login-container').classList.toggle('hidden');
     document.getElementById('register-container').classList.toggle('hidden');
 }
 
+// toggle password visibility
 function togglePassword(inputId, btn) {
     const input = document.getElementById(inputId);
     const icon = btn.querySelector('i');
@@ -15,8 +17,10 @@ function togglePassword(inputId, btn) {
     }
 }
 
+// API base URL
 const API_BASE_URL = 'http://localhost:3000/api/auth';
 
+// event listeners
 document.getElementById('register-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('reg-name').value;
@@ -38,6 +42,7 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
 
         const data = await response.json();
 
+        // si el registro es exitoso, mostrar el formulario de login
         if (response.ok) {
             toggleAuth();
         } else {
@@ -49,11 +54,14 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
     }
 });
 
+
+// login
 document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
+    // intentar iniciar sesión con las credenciales proporcionadas
     try {
         const response = await fetch(`${API_BASE_URL}/login`, {
             method: 'POST',
@@ -63,6 +71,8 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
         const data = await response.json();
 
+
+        // si el inicio de sesión es exitoso, guardar el usuario en localStorage y redirigir a scanner.html
         if (response.ok) {
             localStorage.setItem('user', JSON.stringify(data));
             window.location.href = 'scanner.html';
