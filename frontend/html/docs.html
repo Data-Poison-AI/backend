@@ -22,14 +22,12 @@
                 }
             }
         }
-
     </script>
 </head>
 <body class="min-h-screen flex flex-col">
 
-
-    <!-- navbar ...  -->
-  <nav class="nav-glass sticky top-0 z-[100] transition-all">
+    <!-- navbar -->
+    <nav class="nav-glass sticky top-0 z-[100] transition-all">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2 group cursor-pointer" style="text-decoration:none; color:inherit;">
                 <div class="relative">
@@ -39,52 +37,59 @@
                 <span class="text-xl font-bold tracking-tighter uppercase">Poison<span class="text-brandgreen">AI</span></span>
             </a>
             <div class="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-widest">
-                <a href="index.html" class="text-gray-400 hover:text-white transition">Inicio</a>
-                <a href="docs.html" class="text-brandpurple">Documentación</a>
-                <a href="#" class="text-gray-400 hover:text-white transition">Contacto</a>
-                <a href="login.html" class="bg-gradient-to-r from-brandpurple to-brandgreen text-white px-6 py-2 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:scale-105 transition">Iniciar Sesión</a>
+                <a href="index.html" data-t="nav_home" class="text-gray-400 hover:text-white transition">Inicio</a>
+                <a href="docs.html" data-t="nav_docs" class="text-brandpurple">Documentación</a>
+                <a href="#" data-t="nav_contact" class="text-gray-400 hover:text-white transition">Contacto</a>
+
+                <!-- Botón de idioma -->
+                <button onclick="toggleLang()" class="text-gray-400 hover:text-white transition flex items-center gap-2 border border-white/10 px-3 py-1.5 rounded-lg hover:bg-white/5">
+                    <i class="fa-solid fa-globe"></i>
+                    <span id="lang-label">EN</span>
+                </button>
+
+                <a href="login.html" data-t="nav_login" class="bg-gradient-to-r from-brandpurple to-brandgreen text-white px-6 py-2 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:scale-105 transition">Iniciar Sesión</a>
             </div>
         </div>
     </nav>
 
     <header class="container mx-auto px-6 pt-12 pb-8 text-center">
-        <h1 class="text-4xl font-extrabold mb-4 glow-text-mixed" style="font-family: 'Syne', sans-serif; letter-spacing: -0.02em;">
+        <h1 data-t="page_title" class="text-4xl font-extrabold mb-4 glow-text-mixed" style="font-family: 'Syne', sans-serif; letter-spacing: -0.02em;">
             Documentación
         </h1>
-        <p class="text-sm" style="color: #d6d5d6;">Todo lo que necesitas para usar PoisonAI de forma efectiva.</p>
+        <p data-t="page_subtitle" class="text-sm" style="color: #d6d5d6;">Todo lo que necesitas para usar PoisonAI de forma efectiva.</p>
     </header>
 
     <main class="container mx-auto px-6 py-8 flex-grow flex flex-col lg:flex-row gap-10">
         
         <aside class="w-full lg:w-1/4">
             <div class="glass-card p-6 rounded-xl sticky top-6">
-                <h4 class="text-xs font-bold tracking-widest mb-4 uppercase" style="color:#d6d5d6; font-family: 'Space Mono', monospace;">
+                <h4 data-t="sidebar_title" class="text-xs font-bold tracking-widest mb-4 uppercase" style="color:#d6d5d6; font-family: 'Space Mono', monospace;">
                     Contenido
                 </h4>
                 <nav class="flex flex-col gap-1" id="sidebar-menu">
                     <a href="#inicio-rapido" class="sidebar-link active flex items-center gap-3 px-3 py-2 text-sm text-gray-400 transition">
                         <i class="fa-solid fa-book-open w-5 text-center" style="color: var(--purple);"></i>
-                        Guía de Inicio Rápido
+                        <span data-t="sidebar_s1">Guía de Inicio Rápido</span>
                     </a>
                     <a href="#tipos-analisis" class="sidebar-link flex items-center gap-3 px-3 py-2 text-sm text-gray-400 transition">
                         <i class="fa-regular fa-file-lines w-5 text-center" style="color: var(--green);"></i>
-                        Tipos de Análisis
+                        <span data-t="sidebar_s2">Tipos de Análisis</span>
                     </a>
                     <a href="#sistema-puntaje" class="sidebar-link flex items-center gap-3 px-3 py-2 text-sm text-gray-400 transition">
                         <i class="fa-solid fa-shield-halved w-5 text-center" style="color: var(--purple);"></i>
-                        Sistema de Puntaje
+                        <span data-t="sidebar_s3">Sistema de Puntaje</span>
                     </a>
                     <a href="#api-reference" class="sidebar-link flex items-center gap-3 px-3 py-2 text-sm text-gray-400 transition">
                         <i class="fa-solid fa-code w-5 text-center" style="color: var(--green);"></i>
-                        API Reference
+                        <span data-t="sidebar_s4">API Reference</span>
                     </a>
                     <a href="#especificaciones" class="sidebar-link flex items-center gap-3 px-3 py-2 text-sm text-gray-400 transition">
                         <i class="fa-solid fa-terminal w-5 text-center" style="color: var(--purple);"></i>
-                        Especificaciones Técnicas
+                        <span data-t="sidebar_s5">Especificaciones Técnicas</span>
                     </a>
                     <a href="#legal" class="sidebar-link flex items-center gap-3 px-3 py-2 text-sm text-gray-400 transition">
                         <i class="fa-solid fa-scale-balanced w-5 text-center" style="color: var(--green);"></i>
-                        Información Legal
+                        <span data-t="sidebar_s6">Información Legal</span>
                     </a>
                 </nav>
                 <div class="mt-6 pt-4" style="border-top: 1px solid rgba(176,102,255,0.1);">
@@ -95,47 +100,50 @@
 
         <div class="w-full lg:w-3/4 space-y-6 pb-20">
             
+            <!-- Sección 1 -->
             <section id="inicio-rapido" class="glass-card p-8 rounded-xl scroll-mt-6">
                 <div class="flex items-center gap-4 mb-6">
                     <div class="icon-box-purple w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
                         <i class="fa-solid fa-book-open text-sm"></i>
                     </div>
-                    <h2 class="text-lg font-bold section-title purple-line" style="font-family: 'Syne', sans-serif;">Guía de Inicio Rápido</h2>
+                    <h2 data-t="s1_title" class="text-lg font-bold section-title purple-line" style="font-family: 'Syne', sans-serif;">Guía de Inicio Rápido</h2>
                 </div>
                 <ul class="custom-list">
-                    <li>1. Crea una cuenta en PoisonAI o inicia sesión.</li>
-                    <li>2. Dirígete a la sección 'IA Scanner' desde el menú.</li>
-                    <li>3. Selecciona el tipo de archivo que deseas analizar: imagen, texto o código.</li>
-                    <li>4. Carga tu archivo y presiona 'Analizar'.</li>
-                    <li>5. Revisa el informe de seguridad con el puntaje de riesgo.</li>
+                    <li data-t="s1_1">1. Crea una cuenta en PoisonAI o inicia sesión.</li>
+                    <li data-t="s1_2">2. Dirígete a la sección 'IA Scanner' desde el menú.</li>
+                    <li data-t="s1_3">3. Selecciona el tipo de archivo que deseas analizar: imagen, texto o código.</li>
+                    <li data-t="s1_4">4. Carga tu archivo y presiona 'Analizar'.</li>
+                    <li data-t="s1_5">5. Revisa el informe de seguridad con el puntaje de riesgo.</li>
                 </ul>
             </section>
 
+            <!-- Sección 2 -->
             <section id="tipos-analisis" class="glass-card p-8 rounded-xl scroll-mt-6">
                 <div class="flex items-center gap-4 mb-6">
                     <div class="icon-box-green w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
                         <i class="fa-regular fa-file-lines text-sm"></i>
                     </div>
-                    <h2 class="text-lg font-bold section-title green-line" style="font-family: 'Syne', sans-serif;">Tipos de Análisis</h2>
+                    <h2 data-t="s2_title" class="text-lg font-bold section-title green-line" style="font-family: 'Syne', sans-serif;">Tipos de Análisis</h2>
                 </div>
                 <ul class="custom-list">
-                    <li><strong style="color: var(--green);">Imágenes:</strong> Detecta esteganografía, contenido oculto, metadata maliciosa y payloads embebidos en archivos de imagen (PNG, JPG, BMP, GIF).</li>
-                    <li><strong style="color: var(--purple);">Archivos de texto:</strong> Analiza archivos .txt en busca de URLs maliciosas, patrones de phishing, scripts ofuscados y contenido sospechoso.</li>
-                    <li><strong style="color: var(--green);">Código fuente:</strong> Escanea código en busca de backdoors, inyecciones, vulnerabilidades conocidas y patrones de malware.</li>
+                    <li data-t="s2_1"><strong style="color: var(--green);">Imágenes:</strong> Detecta esteganografía, contenido oculto, metadata maliciosa y payloads embebidos en archivos de imagen (PNG, JPG, BMP, GIF).</li>
+                    <li data-t="s2_2"><strong style="color: var(--purple);">Archivos de texto:</strong> Analiza archivos .txt en busca de URLs maliciosas, patrones de phishing, scripts ofuscados y contenido sospechoso.</li>
+                    <li data-t="s2_3"><strong style="color: var(--green);">Código fuente:</strong> Escanea código en busca de backdoors, inyecciones, vulnerabilidades conocidas y patrones de malware.</li>
                 </ul>
             </section>
 
+            <!-- Sección 3 -->
             <section id="sistema-puntaje" class="glass-card p-8 rounded-xl scroll-mt-6">
                 <div class="flex items-center gap-4 mb-6">
                     <div class="icon-box-purple w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
                         <i class="fa-solid fa-shield-halved text-sm"></i>
                     </div>
-                    <h2 class="text-lg font-bold section-title purple-line" style="font-family: 'Syne', sans-serif;">Sistema de Puntaje</h2>
+                    <h2 data-t="s3_title" class="text-lg font-bold section-title purple-line" style="font-family: 'Syne', sans-serif;">Sistema de Puntaje</h2>
                 </div>
                 <ul class="custom-list">
-                    <li><strong style="color: var(--green);">0–30: Seguro</strong> — No se detectaron amenazas. El archivo es confiable.</li>
-                    <li><strong style="color: #f4c542;">31–69: Precaución</strong> — Se encontraron patrones sospechosos. Revisar manualmente.</li>
-                    <li><strong style="color: #ff5252;">70–100: Peligroso</strong> — Alta probabilidad de contenido contaminado. No utilizar sin revisión profunda.</li>
+                    <li data-t="s3_1"><strong style="color: var(--green);">0–30: Seguro</strong> — No se detectaron amenazas. El archivo es confiable.</li>
+                    <li data-t="s3_2"><strong style="color: #f4c542;">31–69: Precaución</strong> — Se encontraron patrones sospechosos. Revisar manualmente.</li>
+                    <li data-t="s3_3"><strong style="color: #ff5252;">70–100: Peligroso</strong> — Alta probabilidad de contenido contaminado. No utilizar sin revisión profunda.</li>
                 </ul>
                 <div class="mt-6 rounded-lg overflow-hidden" style="height: 6px; background: rgba(255,255,255,0.05);">
                     <div style="height:100%;width:100%;background:linear-gradient(90deg,#00e676 0%,#00e676 30%,#f4c542 30%,#f4c542 69%,#ff5252 69%,#ff5252 100%);border-radius:3px;"></div>
@@ -145,48 +153,51 @@
                 </div>
             </section>
 
+            <!-- Sección 4 -->
             <section id="api-reference" class="glass-card p-8 rounded-xl scroll-mt-6">
                 <div class="flex items-center gap-4 mb-6">
                     <div class="icon-box-green w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
                         <i class="fa-solid fa-code text-sm"></i>
                     </div>
-                    <h2 class="text-lg font-bold section-title green-line" style="font-family: 'Syne', sans-serif;">API Reference</h2>
+                    <h2 data-t="s4_title" class="text-lg font-bold section-title green-line" style="font-family: 'Syne', sans-serif;">API Reference</h2>
                 </div>
                 <ul class="custom-list">
-                    <li><code class="tag-post mr-2">POST</code> <span style="color:#ede0ff;">/api/v1/scan</span> — Envía un archivo para análisis. Acepta multipart/form-data.</li>
-                    <li><code class="tag-get mr-2">GET</code> <span style="color:#ede0ff;">/api/v1/report/:id</span> — Obtiene el informe de un análisis previo.</li>
-                    <li><code class="tag-get mr-2">GET</code> <span style="color:#ede0ff;">/api/v1/history</span> — Lista el historial de análisis del usuario autenticado.</li>
-                    <li><span style="color:#ede0ff;">Headers requeridos:</span> <span style="font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--purple);">Authorization: Bearer &lt;token&gt;</span></li>
+                    <li data-t="s4_1"><code class="tag-post mr-2">POST</code> <span style="color:#ede0ff;">/api/v1/scan</span> — Envía un archivo para análisis. Acepta multipart/form-data.</li>
+                    <li data-t="s4_2"><code class="tag-get mr-2">GET</code> <span style="color:#ede0ff;">/api/v1/report/:id</span> — Obtiene el informe de un análisis previo.</li>
+                    <li data-t="s4_3"><code class="tag-get mr-2">GET</code> <span style="color:#ede0ff;">/api/v1/history</span> — Lista el historial de análisis del usuario autenticado.</li>
+                    <li data-t="s4_4"><span style="color:#ede0ff;">Headers requeridos:</span> <span style="font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--purple);">Authorization: Bearer &lt;token&gt;</span></li>
                 </ul>
             </section>
 
+            <!-- Sección 5 -->
             <section id="especificaciones" class="glass-card p-8 rounded-xl scroll-mt-6">
                 <div class="flex items-center gap-4 mb-6">
                     <div class="icon-box-purple w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
                         <i class="fa-solid fa-terminal text-sm"></i>
                     </div>
-                    <h2 class="text-lg font-bold section-title purple-line" style="font-family: 'Syne', sans-serif;">Especificaciones Técnicas</h2>
+                    <h2 data-t="s5_title" class="text-lg font-bold section-title purple-line" style="font-family: 'Syne', sans-serif;">Especificaciones Técnicas</h2>
                 </div>
                 <ul class="custom-list">
-                    <li><strong style="color:var(--purple);">Motor de IA:</strong> Modelo de deep learning entrenado con +2M de muestras de malware.</li>
-                    <li><strong style="color:var(--green);">Precisión:</strong> 97.3% de tasa de detección con 0.8% de falsos positivos.</li>
-                    <li><strong style="color:var(--purple);">Tiempo de respuesta:</strong> &lt; 3 segundos para archivos de hasta 50MB.</li>
-                    <li><strong style="color:var(--green);">Infraestructura:</strong> Procesamiento en la nube con encriptación end-to-end.</li>
+                    <li data-t="s5_1"><strong style="color:var(--purple);">Motor de IA:</strong> Modelo de deep learning entrenado con +2M de muestras de malware.</li>
+                    <li data-t="s5_2"><strong style="color:var(--green);">Precisión:</strong> 97.3% de tasa de detección con 0.8% de falsos positivos.</li>
+                    <li data-t="s5_3"><strong style="color:var(--purple);">Tiempo de respuesta:</strong> &lt; 3 segundos para archivos de hasta 50MB.</li>
+                    <li data-t="s5_4"><strong style="color:var(--green);">Infraestructura:</strong> Procesamiento en la nube con encriptación end-to-end.</li>
                 </ul>
             </section>
 
+            <!-- Sección 6 -->
             <section id="legal" class="glass-card p-8 rounded-xl scroll-mt-6">
                 <div class="flex items-center gap-4 mb-6">
                     <div class="icon-box-green w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
                         <i class="fa-solid fa-scale-balanced text-sm"></i>
                     </div>
-                    <h2 class="text-lg font-bold section-title green-line" style="font-family: 'Syne', sans-serif;">Información Legal</h2>
+                    <h2 data-t="s6_title" class="text-lg font-bold section-title green-line" style="font-family: 'Syne', sans-serif;">Información Legal</h2>
                 </div>
                 <ul class="custom-list">
-                    <li><strong style="color:var(--green);">Términos de Uso:</strong> Al utilizar PoisonAI, aceptas que los archivos analizados se procesan de forma temporal y no se almacenan permanentemente en nuestros servidores.</li>
-                    <li><strong style="color:var(--purple);">Política de Privacidad:</strong> No compartimos datos de usuario con terceros. Toda la información es encriptada en tránsito y en reposo.</li>
-                    <li><strong style="color:var(--green);">Cumplimiento:</strong> PoisonAI cumple con GDPR y regulaciones de protección de datos.</li>
-                    <li><strong style="color:var(--purple);">Responsabilidad:</strong> Los resultados del análisis son orientativos y no sustituyen una auditoría de seguridad profesional.</li>
+                    <li data-t="s6_1"><strong style="color:var(--green);">Términos de Uso:</strong> Al utilizar PoisonAI, aceptas que los archivos analizados se procesan de forma temporal y no se almacenan permanentemente en nuestros servidores.</li>
+                    <li data-t="s6_2"><strong style="color:var(--purple);">Política de Privacidad:</strong> No compartimos datos de usuario con terceros. Toda la información es encriptada en tránsito y en reposo.</li>
+                    <li data-t="s6_3"><strong style="color:var(--green);">Cumplimiento:</strong> PoisonAI cumple con GDPR y regulaciones de protección de datos.</li>
+                    <li data-t="s6_4"><strong style="color:var(--purple);">Responsabilidad:</strong> Los resultados del análisis son orientativos y no sustituyen una auditoría de seguridad profesional.</li>
                 </ul>
             </section>
 
@@ -201,32 +212,32 @@
                         <i class="fa-solid fa-shield-halved text-xl" style="color: var(--purple);"></i>
                         <span class="text-lg font-bold tracking-wide">Data<span style="color: var(--green);">Poison</span></span>
                     </div>
-                    <p class="text-xs" style="color: #6b5a8a;">Inteligencia artificial de detección de contenido malicioso.</p>
+                    <p data-t="footer_desc" class="text-xs" style="color: #6b5a8a;">Inteligencia artificial de detección de contenido malicioso.</p>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-3 text-xs tracking-widest" style="color: #7a5aa0; font-family: 'Space Mono', monospace;">PRODUCTO</h4>
+                    <h4 data-t="footer_product" class="font-bold mb-3 text-xs tracking-widest" style="color: #7a5aa0; font-family: 'Space Mono', monospace;">PRODUCTO</h4>
                     <ul class="space-y-2 text-xs" style="color: #9a7abf;">
-                        <li><a href="#" class="hover:text-purple-400 transition">IA Scanner</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition">Documentación</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition">Planes</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">AI Scanner</a></li>
+                        <li><a data-t="footer_docs" href="#" class="hover:text-purple-400 transition">Documentación</a></li>
+                        <li><a data-t="footer_plans" href="#" class="hover:text-purple-400 transition">Planes</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-bold mb-3 text-xs tracking-widest" style="color: #4a8a6a; font-family: 'Space Mono', monospace;">LEGAL</h4>
                     <ul class="space-y-2 text-xs" style="color: #6aaa8a;">
-                        <li><a href="#" class="hover:text-green-400 transition">Términos de Uso</a></li>
-                        <li><a href="#" class="hover:text-green-400 transition">Política de Privacidad</a></li>
+                        <li><a data-t="footer_terms" href="#" class="hover:text-green-400 transition">Términos de Uso</a></li>
+                        <li><a data-t="footer_privacy" href="#" class="hover:text-green-400 transition">Política de Privacidad</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-bold mb-3 text-xs tracking-widest" style="color: #7a5aa0; font-family: 'Space Mono', monospace;">CONTACTO</h4>
                     <ul class="space-y-2 text-xs" style="color: #9a7abf;">
                         <li><a href="mailto:soporte@poisonai.ai" class="hover:text-purple-400 transition">soporte@poisonai.ai</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition">Formulario de Contacto</a></li>
+                        <li><a data-t="footer_contact_form" href="#" class="hover:text-purple-400 transition">Formulario de Contacto</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="text-center pt-6" style="border-top: 1px solid rgba(176,102,255,0.08); font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #4a3a6a;">
+            <div data-t="footer_copy" class="text-center pt-6" style="border-top: 1px solid rgba(176,102,255,0.08); font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #4a3a6a;">
                 &copy; 2026 PoisonAI. Todos los derechos reservados.
             </div>
         </div>
@@ -234,5 +245,127 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/docs.js"></script>
+
+    <script>
+        const translations = {
+            es: {
+                nav_home: "Inicio", nav_docs: "Documentación", nav_contact: "Contacto", nav_login: "Iniciar Sesión",
+                page_title: "Documentación",
+                page_subtitle: "Todo lo que necesitas para usar PoisonAI de forma efectiva.",
+                sidebar_title: "Contenido",
+                sidebar_s1: "Guía de Inicio Rápido",
+                sidebar_s2: "Tipos de Análisis",
+                sidebar_s3: "Sistema de Puntaje",
+                sidebar_s4: "API Reference",
+                sidebar_s5: "Especificaciones Técnicas",
+                sidebar_s6: "Información Legal",
+                s1_title: "Guía de Inicio Rápido",
+                s1_1: "1. Crea una cuenta en PoisonAI o inicia sesión.",
+                s1_2: "2. Dirígete a la sección 'IA Scanner' desde el menú.",
+                s1_3: "3. Selecciona el tipo de archivo que deseas analizar: imagen, texto o código.",
+                s1_4: "4. Carga tu archivo y presiona 'Analizar'.",
+                s1_5: "5. Revisa el informe de seguridad con el puntaje de riesgo.",
+                s2_title: "Tipos de Análisis",
+                s2_1: "<strong style='color: var(--green);'>Imágenes:</strong> Detecta esteganografía, contenido oculto, metadata maliciosa y payloads embebidos en archivos de imagen (PNG, JPG, BMP, GIF).",
+                s2_2: "<strong style='color: var(--purple);'>Archivos de texto:</strong> Analiza archivos .txt en busca de URLs maliciosas, patrones de phishing, scripts ofuscados y contenido sospechoso.",
+                s2_3: "<strong style='color: var(--green);'>Código fuente:</strong> Escanea código en busca de backdoors, inyecciones, vulnerabilidades conocidas y patrones de malware.",
+                s3_title: "Sistema de Puntaje",
+                s3_1: "<strong style='color: var(--green);'>0–30: Seguro</strong> — No se detectaron amenazas. El archivo es confiable.",
+                s3_2: "<strong style='color: #f4c542;'>31–69: Precaución</strong> — Se encontraron patrones sospechosos. Revisar manualmente.",
+                s3_3: "<strong style='color: #ff5252;'>70–100: Peligroso</strong> — Alta probabilidad de contenido contaminado. No utilizar sin revisión profunda.",
+                s4_title: "API Reference",
+                s4_1: "<code class='tag-post mr-2'>POST</code> <span style='color:#ede0ff;'>/api/v1/scan</span> — Envía un archivo para análisis. Acepta multipart/form-data.",
+                s4_2: "<code class='tag-get mr-2'>GET</code> <span style='color:#ede0ff;'>/api/v1/report/:id</span> — Obtiene el informe de un análisis previo.",
+                s4_3: "<code class='tag-get mr-2'>GET</code> <span style='color:#ede0ff;'>/api/v1/history</span> — Lista el historial de análisis del usuario autenticado.",
+                s4_4: "<span style='color:#ede0ff;'>Headers requeridos:</span> <span style='font-family:Space Mono,monospace;font-size:0.8rem;color:var(--purple);'>Authorization: Bearer &lt;token&gt;</span>",
+                s5_title: "Especificaciones Técnicas",
+                s5_1: "<strong style='color:var(--purple);'>Motor de IA:</strong> Modelo de deep learning entrenado con +2M de muestras de malware.",
+                s5_2: "<strong style='color:var(--green);'>Precisión:</strong> 97.3% de tasa de detección con 0.8% de falsos positivos.",
+                s5_3: "<strong style='color:var(--purple);'>Tiempo de respuesta:</strong> &lt; 3 segundos para archivos de hasta 50MB.",
+                s5_4: "<strong style='color:var(--green);'>Infraestructura:</strong> Procesamiento en la nube con encriptación end-to-end.",
+                s6_title: "Información Legal",
+                s6_1: "<strong style='color:var(--green);'>Términos de Uso:</strong> Al utilizar PoisonAI, aceptas que los archivos analizados se procesan de forma temporal y no se almacenan permanentemente en nuestros servidores.",
+                s6_2: "<strong style='color:var(--purple);'>Política de Privacidad:</strong> No compartimos datos de usuario con terceros. Toda la información es encriptada en tránsito y en reposo.",
+                s6_3: "<strong style='color:var(--green);'>Cumplimiento:</strong> PoisonAI cumple con GDPR y regulaciones de protección de datos.",
+                s6_4: "<strong style='color:var(--purple);'>Responsabilidad:</strong> Los resultados del análisis son orientativos y no sustituyen una auditoría de seguridad profesional.",
+                footer_desc: "Inteligencia artificial de detección de contenido malicioso.",
+                footer_product: "PRODUCTO",
+                footer_docs: "Documentación",
+                footer_plans: "Planes",
+                footer_terms: "Términos de Uso",
+                footer_privacy: "Política de Privacidad",
+                footer_contact_form: "Formulario de Contacto",
+                footer_copy: "© 2026 PoisonAI. Todos los derechos reservados."
+            },
+            en: {
+                nav_home: "Home", nav_docs: "Documentation", nav_contact: "Contact", nav_login: "Log In",
+                page_title: "Documentation",
+                page_subtitle: "Everything you need to use PoisonAI effectively.",
+                sidebar_title: "Contents",
+                sidebar_s1: "Quick Start Guide",
+                sidebar_s2: "Analysis Types",
+                sidebar_s3: "Scoring System",
+                sidebar_s4: "API Reference",
+                sidebar_s5: "Technical Specifications",
+                sidebar_s6: "Legal Information",
+                s1_title: "Quick Start Guide",
+                s1_1: "1. Create a PoisonAI account or log in.",
+                s1_2: "2. Go to the 'AI Scanner' section from the menu.",
+                s1_3: "3. Select the type of file you want to analyze: image, text or code.",
+                s1_4: "4. Upload your file and press 'Analyze'.",
+                s1_5: "5. Review the security report with the risk score.",
+                s2_title: "Analysis Types",
+                s2_1: "<strong style='color: var(--green);'>Images:</strong> Detects steganography, hidden content, malicious metadata and embedded payloads in image files (PNG, JPG, BMP, GIF).",
+                s2_2: "<strong style='color: var(--purple);'>Text files:</strong> Analyzes .txt files for malicious URLs, phishing patterns, obfuscated scripts and suspicious content.",
+                s2_3: "<strong style='color: var(--green);'>Source code:</strong> Scans code for backdoors, injections, known vulnerabilities and malware patterns.",
+                s3_title: "Scoring System",
+                s3_1: "<strong style='color: var(--green);'>0–30: Safe</strong> — No threats detected. The file is trustworthy.",
+                s3_2: "<strong style='color: #f4c542;'>31–69: Caution</strong> — Suspicious patterns found. Review manually.",
+                s3_3: "<strong style='color: #ff5252;'>70–100: Dangerous</strong> — High probability of contaminated content. Do not use without thorough review.",
+                s4_title: "API Reference",
+                s4_1: "<code class='tag-post mr-2'>POST</code> <span style='color:#ede0ff;'>/api/v1/scan</span> — Submits a file for analysis. Accepts multipart/form-data.",
+                s4_2: "<code class='tag-get mr-2'>GET</code> <span style='color:#ede0ff;'>/api/v1/report/:id</span> — Retrieves the report of a previous analysis.",
+                s4_3: "<code class='tag-get mr-2'>GET</code> <span style='color:#ede0ff;'>/api/v1/history</span> — Lists the analysis history of the authenticated user.",
+                s4_4: "<span style='color:#ede0ff;'>Required headers:</span> <span style='font-family:Space Mono,monospace;font-size:0.8rem;color:var(--purple);'>Authorization: Bearer &lt;token&gt;</span>",
+                s5_title: "Technical Specifications",
+                s5_1: "<strong style='color:var(--purple);'>AI Engine:</strong> Deep learning model trained on 2M+ malware samples.",
+                s5_2: "<strong style='color:var(--green);'>Accuracy:</strong> 97.3% detection rate with 0.8% false positives.",
+                s5_3: "<strong style='color:var(--purple);'>Response time:</strong> &lt; 3 seconds for files up to 50MB.",
+                s5_4: "<strong style='color:var(--green);'>Infrastructure:</strong> Cloud processing with end-to-end encryption.",
+                s6_title: "Legal Information",
+                s6_1: "<strong style='color:var(--green);'>Terms of Use:</strong> By using PoisonAI, you agree that analyzed files are processed temporarily and are not permanently stored on our servers.",
+                s6_2: "<strong style='color:var(--purple);'>Privacy Policy:</strong> We do not share user data with third parties. All information is encrypted in transit and at rest.",
+                s6_3: "<strong style='color:var(--green);'>Compliance:</strong> PoisonAI complies with GDPR and data protection regulations.",
+                s6_4: "<strong style='color:var(--purple);'>Liability:</strong> Analysis results are indicative and do not replace a professional security audit.",
+                footer_desc: "Artificial intelligence for malicious content detection.",
+                footer_product: "PRODUCT",
+                footer_docs: "Documentation",
+                footer_plans: "Plans",
+                footer_terms: "Terms of Use",
+                footer_privacy: "Privacy Policy",
+                footer_contact_form: "Contact Form",
+                footer_copy: "© 2026 PoisonAI. All rights reserved."
+            }
+        };
+
+        let currentLang = 'es';
+
+        function toggleLang() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            const t = translations[currentLang];
+
+            document.getElementById('lang-label').textContent = currentLang === 'es' ? 'EN' : 'ES';
+            document.documentElement.lang = currentLang;
+            document.title = currentLang === 'es' ? 'PoisonAI | Documentación' : 'PoisonAI | Documentation';
+
+            document.querySelectorAll('[data-t]').forEach(el => {
+                const key = el.getAttribute('data-t');
+                if (t[key] !== undefined) {
+                    el.innerHTML = t[key];
+                }
+            });
+        }
+    </script>
+
 </body>
 </html>

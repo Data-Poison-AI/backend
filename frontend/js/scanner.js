@@ -97,9 +97,10 @@
         async function processAnalysis(event) {
             event.stopPropagation();
 
+            // agregar alerta bonita
             const file = fileInput.files[0];
             if (!file) {
-                alert("Por favor selecciona un archivo.");
+                alert("Por favor selecciona un archivo .zip.");
                 return;
             }
 
