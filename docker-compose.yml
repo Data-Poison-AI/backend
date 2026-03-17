@@ -39,11 +39,14 @@ services:
       dockerfile: Dockerfile
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       # Mount source files so changes reflect without rebuild
       - ./frontend:/usr/share/nginx/html
       # Mount nginx config separately so it doesn't get overwritten
       - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf
+      # SSL certificates from Let's Encrypt
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - backend
 
