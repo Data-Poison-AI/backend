@@ -25,6 +25,13 @@
             }
         }
     </script>
+
+    <!-- Si ya está logueado, llevar al scanner directo -->
+    <script>
+        if (localStorage.getItem('user')) {
+            window.location.replace('scanner.html');
+        }
+    </script>
 </head>
 
 <body class="bg-darkbg min-h-screen flex flex-col">
