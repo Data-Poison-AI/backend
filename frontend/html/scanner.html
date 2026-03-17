@@ -47,7 +47,7 @@
 <body class="h-screen flex tech-grid">
 
     <!-- SIDEBAR -->
-    <aside id="sidebar" class="sidebar-transition w-72 flex flex-col p-6 z-30 backdrop-blur-2xl">
+    <aside id="sidebar" class="hidden md:flex sidebar-transition w-72 flex-col p-6 z-30 backdrop-blur-2xl">
 
 
         <!-- Logo -->
@@ -121,6 +121,22 @@
         </div>
     </aside>
 
+    <!-- MOBILE BOTTOM NAV -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full p-3 z-[100] flex justify-around items-center border-t border-white/10 backdrop-blur-3xl" style="background: rgba(7, 4, 15, 0.85); box-shadow: 0 -10px 40px rgba(0,0,0,0.5);">
+        <button onclick="switchView('view-scanner')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brandgreen transition p-2 flex-grow">
+            <i class="fa-solid fa-atom text-xl"></i>
+            <span class="text-[10px] font-bold uppercase tracking-widest">Scanner</span>
+        </button>
+        <button onclick="switchView('view-profile')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-brandpurple transition p-2 flex-grow">
+            <i class="fa-solid fa-user-shield text-xl"></i>
+            <span class="text-[10px] font-bold uppercase tracking-widest">Perfil</span>
+        </button>
+        <a href="docs.html" class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition p-2 flex-grow" style="text-decoration:none;">
+            <i class="fa-solid fa-file-lines text-xl"></i>
+            <span class="text-[10px] font-bold uppercase tracking-widest">Docs</span>
+        </a>
+    </nav>
+
     <!-- MAIN -->
     <main class="flex-grow flex flex-col overflow-hidden relative">
 
@@ -129,7 +145,7 @@
         </header>
 
         <!-- Content -->
-        <div class="flex-grow overflow-y-auto p-10">
+        <div class="flex-grow overflow-y-auto p-5 md:p-10 pb-28 md:pb-10">
             <div class="max-w-6xl mx-auto">
 
                 <!-- SCANNER VIEW -->
