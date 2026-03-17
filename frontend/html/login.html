@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="icon" href="../icons/icon.svg" type="image/svg+xml">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#030305">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PoisonAI">
+    <link rel="apple-touch-icon" href="../icons/icon.svg">
 
     <!-- Configuración de Tailwind CSS -->
     <script>
@@ -168,6 +175,17 @@
     </main>
 
     <script src="../js/login.js"></script>
+
+    <!-- Registro del Service Worker (PWA) -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../sw.js')
+                    .then(reg => console.log('[PWA] Service Worker registrado:', reg.scope))
+                    .catch(err => console.error('[PWA] Error al registrar SW:', err));
+            });
+        }
+    </script>
 
 
     <!-- Traducciones -->

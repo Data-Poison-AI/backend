@@ -1,0 +1,21 @@
+{
+    "name": "PoisonAI - Detección de Amenazas IA",
+    "short_name": "PoisonAI",
+    "description": "Plataforma de inteligencia artificial para detección de contenido malicioso en imágenes, textos y código fuente.",
+    "icons": [
+        {
+            "src": "/icons/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "start_url": "/html/index.html",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "theme_color": "#030305",
+    "background_color": "#030305",
+    "categories": ["security", "utilities", "productivity"],
+    "lang": "es"
+}
