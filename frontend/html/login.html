@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../icons/icon.svg" type="image/svg+xml">
 
     <!-- Configuración de Tailwind CSS -->
     <script>
@@ -33,24 +34,29 @@
             <a href="index.html" class="flex items-center gap-2 group cursor-pointer"
                 style="text-decoration:none; color:inherit;">
                 <div class="relative">
-                    <i class="fa-solid fa-shield-halved text-brandgreen text-2xl group-hover:rotate-[360deg] transition-transform duration-700"></i>
+                    <i
+                        class="fa-solid fa-shield-halved text-brandgreen text-2xl group-hover:rotate-[360deg] transition-transform duration-700"></i>
                     <div class="absolute inset-0 bg-brandgreen/40 blur-md"></div>
                 </div>
-                <span class="text-xl font-bold tracking-tighter uppercase">Poison<span class="text-brandgreen">AI</span></span>
+                <span class="text-xl font-bold tracking-tighter uppercase">Poison<span
+                        class="text-brandgreen">AI</span></span>
             </a>
             <div class="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-widest">
                 <a href="index.html" data-t="nav_home" class="text-gray-400 hover:text-white transition">Inicio</a>
-                <a href="docs.html" data-t="nav_docs" class="text-gray-400 hover:text-white transition">Documentación</a>
+                <a href="docs.html" data-t="nav_docs"
+                    class="text-gray-400 hover:text-white transition">Documentación</a>
                 <a href="#" data-t="nav_contact" class="text-gray-400 hover:text-white transition">Contacto</a>
 
                 <!-- Botón de idioma -->
-                <button onclick="toggleLang()" class="text-gray-400 hover:text-white transition flex items-center gap-2 border border-white/10 px-3 py-1.5 rounded-lg hover:bg-white/5">
+                <button onclick="toggleLang()"
+                    class="text-gray-400 hover:text-white transition flex items-center gap-2 border border-white/10 px-3 py-1.5 rounded-lg hover:bg-white/5">
                     <i class="fa-solid fa-globe"></i>
                     <span id="lang-label">EN</span>
                 </button>
 
                 <a href="login.html" data-t="nav_login"
-                    class="bg-gradient-to-r from-brandpurple to-brandgreen text-white px-6 py-2 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:scale-105 transition">Iniciar Sesión</a>
+                    class="bg-gradient-to-r from-brandpurple to-brandgreen text-white px-6 py-2 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:scale-105 transition">Iniciar
+                    Sesión</a>
             </div>
         </div>
     </nav>
@@ -75,15 +81,16 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                         <i class="fa-regular fa-envelope text-sm"></i>
                     </span>
-                    <input type="email" id="login-email" data-t-placeholder="login_email" placeholder="Email" required class="input-field">
+                    <input type="email" id="login-email" data-t-placeholder="login_email" placeholder="Email" required
+                        class="input-field">
                 </div>
 
                 <div class="relative input-group">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                         <i class="fa-solid fa-lock text-sm"></i>
                     </span>
-                    <input type="password" id="login-password" data-t-placeholder="login_password" placeholder="Contraseña" required class="input-field"
-                        style="padding-right: 2.5rem;">
+                    <input type="password" id="login-password" data-t-placeholder="login_password"
+                        placeholder="Contraseña" required class="input-field" style="padding-right: 2.5rem;">
                     <button type="button" onclick="togglePassword('login-password', this)"
                         class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 hover:text-white transition">
                         <i class="fa-regular fa-eye text-sm"></i>
@@ -117,22 +124,24 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                         <i class="fa-regular fa-user text-sm"></i>
                     </span>
-                    <input type="text" id="reg-name" data-t-placeholder="reg_name" placeholder="Nombre de usuario" required class="input-field">
+                    <input type="text" id="reg-name" data-t-placeholder="reg_name" placeholder="Nombre de usuario"
+                        required class="input-field">
                 </div>
 
                 <div class="relative input-group">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                         <i class="fa-regular fa-envelope text-sm"></i>
                     </span>
-                    <input type="email" id="reg-email" data-t-placeholder="reg_email" placeholder="Email" required class="input-field">
+                    <input type="email" id="reg-email" data-t-placeholder="reg_email" placeholder="Email" required
+                        class="input-field">
                 </div>
 
                 <div class="relative input-group">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                         <i class="fa-solid fa-lock text-sm"></i>
                     </span>
-                    <input type="password" id="reg-password" data-t-placeholder="reg_password" placeholder="Contraseña" required class="input-field"
-                        style="padding-right: 2.5rem;">
+                    <input type="password" id="reg-password" data-t-placeholder="reg_password" placeholder="Contraseña"
+                        required class="input-field" style="padding-right: 2.5rem;">
                     <button type="button" onclick="togglePassword('reg-password', this)"
                         class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 hover:text-white transition">
                         <i class="fa-regular fa-eye text-sm"></i>
@@ -143,8 +152,8 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                         <i class="fa-solid fa-lock text-sm"></i>
                     </span>
-                    <input type="password" id="reg-confirm-password" data-t-placeholder="reg_confirm" placeholder="Confirmar contraseña" required
-                        class="input-field">
+                    <input type="password" id="reg-confirm-password" data-t-placeholder="reg_confirm"
+                        placeholder="Confirmar contraseña" required class="input-field">
                 </div>
 
                 <button type="submit" data-t="register_btn" class="btn-primary">Registrarse</button>
@@ -235,4 +244,5 @@
     </script>
 
 </body>
+
 </html>

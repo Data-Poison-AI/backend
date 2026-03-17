@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../icons/icon.svg" type="image/svg+xml">
 
     <!-- configuración de Tailwind CSS -->
     <script>
@@ -37,24 +38,30 @@
             <a href="index.html" class="flex items-center gap-2 group cursor-pointer"
                 style="text-decoration:none; color:inherit;">
                 <div class="relative">
-                    <i class="fa-solid fa-shield-halved text-brandgreen text-2xl group-hover:rotate-[360deg] transition-transform duration-700"></i>
+                    <i
+                        class="fa-solid fa-shield-halved text-brandgreen text-2xl group-hover:rotate-[360deg] transition-transform duration-700"></i>
                     <div class="absolute inset-0 bg-brandgreen/40 blur-md"></div>
                 </div>
-                <span class="text-xl font-bold tracking-tighter uppercase">Poison<span class="text-brandgreen"> AI</span></span>
+                <span class="text-xl font-bold tracking-tighter uppercase">Poison<span class="text-brandgreen">
+                        AI</span></span>
             </a>
             <div class="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-widest">
                 <a href="#" data-t="nav_home" class="text-brandpurple">Inicio</a>
-                <a href="docs.html" data-t="nav_docs" class="text-gray-400 hover:text-white transition">Documentación</a>
-                <a href="contacto.html" data-t="nav_contact" class="text-gray-400 hover:text-white transition">Contacto</a>
+                <a href="docs.html" data-t="nav_docs"
+                    class="text-gray-400 hover:text-white transition">Documentación</a>
+                <a href="contacto.html" data-t="nav_contact"
+                    class="text-gray-400 hover:text-white transition">Contacto</a>
 
                 <!-- Botón de idioma -->
-                <button onclick="toggleLang()" class="text-gray-400 hover:text-white transition flex items-center gap-2 border border-white/10 px-3 py-1.5 rounded-lg hover:bg-white/5">
+                <button onclick="toggleLang()"
+                    class="text-gray-400 hover:text-white transition flex items-center gap-2 border border-white/10 px-3 py-1.5 rounded-lg hover:bg-white/5">
                     <i class="fa-solid fa-globe"></i>
                     <span id="lang-label">EN</span>
                 </button>
 
                 <a href="login.html" data-t="nav_login"
-                    class="bg-gradient-to-r from-brandpurple to-brandgreen text-white px-6 py-2 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:scale-105 transition">Iniciar Sesión</a>
+                    class="bg-gradient-to-r from-brandpurple to-brandgreen text-white px-6 py-2 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:scale-105 transition">Iniciar
+                    Sesión</a>
             </div>
         </div>
     </nav>
@@ -73,10 +80,12 @@
                     class="text-white border-b border-brandgreen">código fuente</span>.
             </p>
             <div class="flex flex-wrap gap-6 mb-16">
-                <button class="bg-brandgreen text-black px-10 py-4 rounded-xl font-black uppercase tracking-widest hover:bg-brandpurple transition">
+                <button
+                    class="bg-brandgreen text-black px-10 py-4 rounded-xl font-black uppercase tracking-widest hover:bg-brandpurple transition">
                     <a data-t="btn_try" class="fa-solid fa-bolt" href="./scanner.html"> Probar la IA</a>
                 </button>
-                <button class="glass-card text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest border border-white/10 hover:bg-white/5 transition">
+                <button
+                    class="glass-card text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest border border-white/10 hover:bg-white/5 transition">
                     <a data-t="btn_docs" href="docs.html">DOCUMENTACIÓN</a>
                 </button>
             </div>
@@ -125,16 +134,19 @@
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-red-500/10 border border-red-500/20 p-4 rounded-xl">
-                            <div data-t="card_risk_label" class="text-[10px] uppercase text-red-500 font-black mb-1">Riesgo Detectado</div>
+                            <div data-t="card_risk_label" class="text-[10px] uppercase text-red-500 font-black mb-1">
+                                Riesgo Detectado</div>
                             <div class="text-2xl font-black text-white">91%</div>
                         </div>
                         <div class="bg-brandgreen/10 border border-brandgreen/20 p-4 rounded-xl">
-                            <div data-t="card_integrity_label" class="text-[10px] uppercase text-brandgreen font-black mb-1">Integridad</div>
+                            <div data-t="card_integrity_label"
+                                class="text-[10px] uppercase text-brandgreen font-black mb-1">Integridad</div>
                             <div class="text-2xl font-black text-white">9%</div>
                         </div>
                     </div>
                     <div class="space-y-3">
-                        <div class="flex items-center gap-3 text-xs text-red-400 bg-red-500/5 p-3 rounded-lg border border-red-500/10">
+                        <div
+                            class="flex items-center gap-3 text-xs text-red-400 bg-red-500/5 p-3 rounded-lg border border-red-500/10">
                             <i class="fa-solid fa-bug"></i>
                             <span data-t="card_backdoor">Backdoor detectado en 142 archivos</span>
                         </div>
@@ -147,15 +159,18 @@
     <!-- Tecnologías -->
     <section class="py-32 relative overflow-hidden">
         <div class="container mx-auto px-6 text-center">
-            <h2 data-t="tech_title" class="text-4xl font-black mb-4 uppercase tracking-tighter" data-aos="fade-up">Tecnologías <span class="text-brandgreen">Poison</span></h2>
-            <p data-t="tech_sub" class="text-gray-500 mb-16" data-aos="fade-up">El ecosistema más avanzado de IA en ciberseguridad.</p>
+            <h2 data-t="tech_title" class="text-4xl font-black mb-4 uppercase tracking-tighter" data-aos="fade-up">
+                Tecnologías <span class="text-brandgreen">Poison</span></h2>
+            <p data-t="tech_sub" class="text-gray-500 mb-16" data-aos="fade-up">El ecosistema más avanzado de IA en
+                ciberseguridad.</p>
             <div class="flex flex-wrap justify-center gap-8" data-aos="fade-up">
                 <div class="glass-card p-8 rounded-3xl w-48 group">
                     <i class="fa-solid fa-brain text-4xl mb-4 group-hover:text-brandpurple transition duration-500"></i>
                     <div class="text-xs font-bold uppercase tracking-widest text-gray-400">Deep Learning</div>
                 </div>
                 <div class="glass-card p-8 rounded-3xl w-48 group">
-                    <i class="fa-solid fa-file-contract text-4xl mb-4 group-hover:text-brandgreen transition duration-500"></i>
+                    <i
+                        class="fa-solid fa-file-contract text-4xl mb-4 group-hover:text-brandgreen transition duration-500"></i>
                     <div class="text-xs font-bold uppercase tracking-widest text-gray-400">NLP Analysis</div>
                 </div>
                 <div class="glass-card p-8 rounded-3xl w-48 group">
@@ -163,11 +178,13 @@
                     <div class="text-xs font-bold uppercase tracking-widest text-gray-400">Computer Vision</div>
                 </div>
                 <div class="glass-card p-8 rounded-3xl w-48 group">
-                    <i class="fa-solid fa-bug-slash text-4xl mb-4 group-hover:text-brandgreen transition duration-500"></i>
+                    <i
+                        class="fa-solid fa-bug-slash text-4xl mb-4 group-hover:text-brandgreen transition duration-500"></i>
                     <div class="text-xs font-bold uppercase tracking-widest text-gray-400">Malware Det.</div>
                 </div>
                 <div class="glass-card p-8 rounded-3xl w-48 group">
-                    <i class="fa-solid fa-server text-4xl mb-4 group-hover:text-brandpurple transition duration-500"></i>
+                    <i
+                        class="fa-solid fa-server text-4xl mb-4 group-hover:text-brandpurple transition duration-500"></i>
                     <div class="text-xs font-bold uppercase tracking-widest text-gray-400">Cloud Infra</div>
                 </div>
             </div>
@@ -177,19 +194,25 @@
     <!-- Problemas -->
     <section class="py-32 container mx-auto px-6">
         <div class="mb-20 text-center" data-aos="fade-up">
-            <h2 data-t="problems_title" class="text-5xl font-black mb-6 uppercase tracking-tighter">Problemas que <span class="text-brandgreen">resolvemos</span></h2>
-            <p data-t="problems_sub" class="text-gray-400 max-w-2xl mx-auto">Neutralizamos amenazas invisibles con precisión atómica.</p>
+            <h2 data-t="problems_title" class="text-5xl font-black mb-6 uppercase tracking-tighter">Problemas que <span
+                    class="text-brandgreen">resolvemos</span></h2>
+            <p data-t="problems_sub" class="text-gray-400 max-w-2xl mx-auto">Neutralizamos amenazas invisibles con
+                precisión atómica.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
             <div class="md:col-span-8 glass-card p-12 rounded-[2.5rem] group" data-aos="fade-up">
                 <div class="flex flex-col md:flex-row gap-10 items-center">
-                    <div class="w-20 h-20 rounded-2xl bg-brandgreen/10 flex items-center justify-center text-brandgreen text-4xl group-hover:shadow-[0_0_30px_rgba(34,197,94,0.3)] transition">
+                    <div
+                        class="w-20 h-20 rounded-2xl bg-brandgreen/10 flex items-center justify-center text-brandgreen text-4xl group-hover:shadow-[0_0_30px_rgba(34,197,94,0.3)] transition">
                         <i class="fa-regular fa-image"></i>
                     </div>
                     <div>
-                        <h3 data-t="p1_title" class="text-2xl font-black mb-4 uppercase text-white">Esteganografía en Imágenes</h3>
-                        <p data-t="p1_desc" class="text-gray-400 leading-relaxed">Detecta datos ocultos, payloads embebidos y metadata maliciosa en archivos de imagen que pasan desapercibidos para antivirus tradicionales.</p>
+                        <h3 data-t="p1_title" class="text-2xl font-black mb-4 uppercase text-white">Esteganografía en
+                            Imágenes</h3>
+                        <p data-t="p1_desc" class="text-gray-400 leading-relaxed">Detecta datos ocultos, payloads
+                            embebidos y metadata maliciosa en archivos de imagen que pasan desapercibidos para antivirus
+                            tradicionales.</p>
                     </div>
                 </div>
             </div>
@@ -197,23 +220,29 @@
             <div class="md:col-span-4 glass-card p-10 rounded-[2.5rem] group" data-aos="fade-up" data-aos-delay="100">
                 <i class="fa-regular fa-file-lines text-3xl text-brandpurple mb-6 block"></i>
                 <h3 data-t="p2_title" class="text-xl font-bold mb-3 uppercase">Phishing en Texto</h3>
-                <p data-t="p2_desc" class="text-sm text-gray-500">Identifica URLs ofuscadas y patrones de ingeniería social en segundos.</p>
+                <p data-t="p2_desc" class="text-sm text-gray-500">Identifica URLs ofuscadas y patrones de ingeniería
+                    social en segundos.</p>
             </div>
 
             <div class="md:col-span-4 glass-card p-10 rounded-[2.5rem] group" data-aos="fade-up">
                 <i class="fa-solid fa-code text-3xl text-brandgreen mb-6 block"></i>
                 <h3 data-t="p3_title" class="text-xl font-bold mb-3 uppercase">Backdoors en Código</h3>
-                <p data-t="p3_desc" class="text-sm text-gray-500">Escanea código fuente en busca de puertas traseras y conexiones C2.</p>
+                <p data-t="p3_desc" class="text-sm text-gray-500">Escanea código fuente en busca de puertas traseras y
+                    conexiones C2.</p>
             </div>
 
             <div class="md:col-span-8 glass-card p-12 rounded-[2.5rem] group" data-aos="fade-up" data-aos-delay="100">
                 <div class="flex flex-col md:flex-row gap-10 items-center">
-                    <div class="w-20 h-20 rounded-2xl bg-brandpurple/10 flex items-center justify-center text-brandpurple text-4xl group-hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] transition">
+                    <div
+                        class="w-20 h-20 rounded-2xl bg-brandpurple/10 flex items-center justify-center text-brandpurple text-4xl group-hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] transition">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                     </div>
                     <div>
-                        <h3 data-t="p4_title" class="text-2xl font-black mb-4 uppercase text-white">Zero-Day Exploits</h3>
-                        <p data-t="p4_desc" class="text-gray-400 leading-relaxed">Modelos entrenados con las últimas muestras de malware para detectar amenazas emergentes antes que las soluciones tradicionales.</p>
+                        <h3 data-t="p4_title" class="text-2xl font-black mb-4 uppercase text-white">Zero-Day Exploits
+                        </h3>
+                        <p data-t="p4_desc" class="text-gray-400 leading-relaxed">Modelos entrenados con las últimas
+                            muestras de malware para detectar amenazas emergentes antes que las soluciones
+                            tradicionales.</p>
                     </div>
                 </div>
             </div>
@@ -221,25 +250,33 @@
             <div class="md:col-span-6 glass-card p-10 rounded-[2.5rem] group" data-aos="fade-up">
                 <i class="fa-solid fa-lock text-3xl text-brandgreen mb-6 block"></i>
                 <h3 data-t="p5_title" class="text-xl font-bold mb-3 uppercase">Exfiltración de Datos</h3>
-                <p data-t="p5_desc" class="text-sm text-gray-500">Detecta intentos de robo de información sensible a través de canales encubiertos.</p>
+                <p data-t="p5_desc" class="text-sm text-gray-500">Detecta intentos de robo de información sensible a
+                    través de canales encubiertos.</p>
             </div>
 
             <div class="md:col-span-6 glass-card p-10 rounded-[2.5rem] group" data-aos="fade-up" data-aos-delay="100">
                 <i class="fa-solid fa-bug text-3xl text-brandpurple mb-6 block"></i>
                 <h3 data-t="p6_title" class="text-xl font-bold mb-3 uppercase">Supply Chain Attacks</h3>
-                <p data-t="p6_desc" class="text-sm text-gray-500">Analiza dependencias de código para identificar paquetes comprometidos.</p>
+                <p data-t="p6_desc" class="text-sm text-gray-500">Analiza dependencias de código para identificar
+                    paquetes comprometidos.</p>
             </div>
         </div>
     </section>
 
     <!-- CTA -->
     <section class="py-40 container mx-auto px-6">
-        <div class="relative rounded-[3rem] overflow-hidden p-20 text-center glass-card border-brandpurple/20" data-aos="zoom-in">
+        <div class="relative rounded-[3rem] overflow-hidden p-20 text-center glass-card border-brandpurple/20"
+            data-aos="zoom-in">
             <div class="absolute -top-24 -left-24 w-64 h-64 bg-brandgreen blur-[100px] opacity-20"></div>
             <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-brandpurple blur-[100px] opacity-20"></div>
-            <h2 data-t="cta_title" class="text-5xl font-black mb-8 tracking-tighter uppercase">Protege tus archivos <span class="text-brandgreen">ahora</span></h2>
-            <p data-t="cta_sub" class="text-gray-400 mb-12 max-w-xl mx-auto text-lg">Empieza a analizar tus archivos gratis. Sin tarjeta de crédito requerida.</p>
-            <a data-t="cta_btn" class="bg-brandgreen text-white px-12 py-5 rounded-2xl font-black uppercase tracking-[0.2em] hover:bg-brandpurple transition-all shadow-2xl hover:scale-110 inline-block" href="./scanner.html">
+            <h2 data-t="cta_title" class="text-5xl font-black mb-8 tracking-tighter uppercase">Protege tus archivos
+                <span class="text-brandgreen">ahora</span>
+            </h2>
+            <p data-t="cta_sub" class="text-gray-400 mb-12 max-w-xl mx-auto text-lg">Empieza a analizar tus archivos
+                gratis. Sin tarjeta de crédito requerida.</p>
+            <a data-t="cta_btn"
+                class="bg-brandgreen text-white px-12 py-5 rounded-2xl font-black uppercase tracking-[0.2em] hover:bg-brandpurple transition-all shadow-2xl hover:scale-110 inline-block"
+                href="./scanner.html">
                 Comenzar Gratis
             </a>
         </div>
@@ -252,34 +289,45 @@
                 <div class="col-span-1">
                     <div class="flex items-center gap-2 mb-4">
                         <i class="fa-solid fa-shield-halved text-xl" style="color: var(--purple);"></i>
-                        <span class="text-lg font-bold tracking-wide">Data<span style="color: var(--green);">Poison</span></span>
+                        <span class="text-lg font-bold tracking-wide">Data<span
+                                style="color: var(--green);">Poison</span></span>
                     </div>
-                    <p data-t="footer_desc" class="text-xs" style="color: #6b5a8a;">Inteligencia artificial de detección de contenido malicioso.</p>
+                    <p data-t="footer_desc" class="text-xs" style="color: #6b5a8a;">Inteligencia artificial de detección
+                        de contenido malicioso.</p>
                 </div>
                 <div>
-                    <h4 data-t="footer_product" class="font-bold mb-3 text-xs tracking-widest" style="color: #7a5aa0; font-family: 'Space Mono', monospace;">PRODUCTO</h4>
+                    <h4 data-t="footer_product" class="font-bold mb-3 text-xs tracking-widest"
+                        style="color: #7a5aa0; font-family: 'Space Mono', monospace;">PRODUCTO</h4>
                     <ul class="space-y-2 text-xs" style="color: #9a7abf;">
                         <li><a href="#" class="hover:text-purple-400 transition">AI Scanner</a></li>
-                        <li><a data-t="footer_docs" href="#" class="hover:text-purple-400 transition">Documentación</a></li>
+                        <li><a data-t="footer_docs" href="#" class="hover:text-purple-400 transition">Documentación</a>
+                        </li>
                         <li><a data-t="footer_plans" href="#" class="hover:text-purple-400 transition">Planes</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-3 text-xs tracking-widest" style="color: #4a8a6a; font-family: 'Space Mono', monospace;">LEGAL</h4>
+                    <h4 class="font-bold mb-3 text-xs tracking-widest"
+                        style="color: #4a8a6a; font-family: 'Space Mono', monospace;">LEGAL</h4>
                     <ul class="space-y-2 text-xs" style="color: #6aaa8a;">
-                        <li><a data-t="footer_terms" href="#" class="hover:text-green-400 transition">Términos de Uso</a></li>
-                        <li><a data-t="footer_privacy" href="#" class="hover:text-green-400 transition">Política de Privacidad</a></li>
+                        <li><a data-t="footer_terms" href="#" class="hover:text-green-400 transition">Términos de
+                                Uso</a></li>
+                        <li><a data-t="footer_privacy" href="#" class="hover:text-green-400 transition">Política de
+                                Privacidad</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-3 text-xs tracking-widest" style="color: #7a5aa0; font-family: 'Space Mono', monospace;">CONTACTO</h4>
+                    <h4 class="font-bold mb-3 text-xs tracking-widest"
+                        style="color: #7a5aa0; font-family: 'Space Mono', monospace;">CONTACTO</h4>
                     <ul class="space-y-2 text-xs" style="color: #9a7abf;">
-                        <li><a href="mailto:soporte@poisonai.ai" class="hover:text-purple-400 transition">soporte@poisonai.ai</a></li>
-                        <li><a data-t="footer_contact_form" href="contacto.html" class="hover:text-purple-400 transition">Formulario de Contacto</a></li>
+                        <li><a href="mailto:soporte@poisonai.ai"
+                                class="hover:text-purple-400 transition">soporte@poisonai.ai</a></li>
+                        <li><a data-t="footer_contact_form" href="contacto.html"
+                                class="hover:text-purple-400 transition">Formulario de Contacto</a></li>
                     </ul>
                 </div>
             </div>
-            <div data-t="footer_copy" class="text-center pt-6" style="border-top: 1px solid rgba(176,102,255,0.08); font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #4a3a6a;">
+            <div data-t="footer_copy" class="text-center pt-6"
+                style="border-top: 1px solid rgba(176,102,255,0.08); font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #4a3a6a;">
                 &copy; 2026 PoisonAI. Todos los derechos reservados.
             </div>
         </div>
@@ -404,4 +452,5 @@
     </script>
 
 </body>
+
 </html>
